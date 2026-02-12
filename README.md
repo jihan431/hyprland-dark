@@ -1,3 +1,4 @@
+cat > ~/dotfiles/README.md << 'EOF'
 # 🍙 My Dotfiles
 
 ![My Setup](waybar/image.png)
@@ -12,7 +13,7 @@ Koleksi konfigurasi (dotfiles) untuk setup Linux saya menggunakan **Hyprland** d
 
 | Desktop | App Launcher |
 |:---:|:---:|
-| <img src="waybar/image1.png" alt="Desktop" width="400"/> | <img src="waybar/image2.png" alt="Launcher" width="400"/> |
+| <img src="waybar/image3.png" alt="Desktop" width="400"/> | <img src="waybar/image2.png" alt="Launcher" width="400"/> |
 | *Clean State* | *App Launcher* |
 
 ---
@@ -22,25 +23,48 @@ Koleksi konfigurasi (dotfiles) untuk setup Linux saya menggunakan **Hyprland** d
 - **OS**: Linux
 - **WM**: [Hyprland](https://github.com/hyprwm/Hyprland)
 - **Bar**: [Waybar](https://github.com/Alexays/Waybar)
-- **Terminal**: Alacritty / Kitty
-- **Shell**: Zsh
+- **Terminal**: Kitty
+- **Shell**: Bash
 - **Font**: JetBrains Mono Nerd Font
-- **Launcher**: Wofi / Hyprlauncher
+- **Launcher**: Rofi
 
 ---
 
 ## 📂 Structure
+dotfiles/
+├── hypr/
+├── waybar/
+├── install.sh
+└── README.md
 
-Repository ini berisi konfigurasi untuk:
 
-- **`hypr/`** : Konfigurasi utama Hyprland, keybindings, dan wallpaper.
-- **`waybar/`** : Konfigurasi status bar dan styling (CSS + image preview).
+- **`hypr/`** → Konfigurasi utama Hyprland
+- **`waybar/`** → Konfigurasi Waybar + styling + scripts
+- **`install.sh`** → Script otomatis untuk setup & symlink config
 
 ---
 
 ## 🚀 Installation
 
-### 1. Clone Repository
+### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/USERNAME_ANDA/dotfiles.git ~/dotfiles
+git clone https://github.com/jihan431/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+2️⃣ Jalankan Install Script
+chmod +x install.sh
+./install.sh
+```
+🔤 Font Requirement
+
+JetBrains Mono Nerd Font
+
+Nerd Fonts (untuk icon Waybar & Rofi)
+https://www.nerdfonts.com/
+
+⌨️ Keybinds
+Key	Action
+Super + Q	Close App
+Super + Enter Open Terminal
+Super + E	File Manager
+Super + Space	App Launcher
