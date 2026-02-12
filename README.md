@@ -29,17 +29,6 @@ Koleksi konfigurasi (dotfiles) untuk setup Linux saya menggunakan **Hyprland** d
 - **Launcher**: Rofi
 
 ---
-
-## 📂 Structure
-dotfiles/
-├── hypr/
-├── waybar/
-├── install.sh
-└── README.md
-
-
-- **`hypr/`** → Konfigurasi utama Hyprland
-- **`waybar/`** → Konfigurasi Waybar + styling + scripts
 - **`install.sh`** → Script otomatis untuk setup & symlink config
 
 ---
