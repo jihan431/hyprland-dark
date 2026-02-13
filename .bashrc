@@ -35,10 +35,23 @@ C_CYAN='\[\e[1;36m\]'
 C_RESET='\[\e[0m\]'
 PS1="${C_CYAN}󰣇  \u ${C_RESET}• ${C_CYAN}\w ${C_CYAN}❯${C_RESET} "
 
-# --- Fastfetch Execution ---
+# --- ASCII Art & Fastfetch ---
 if command -v fastfetch &> /dev/null; then
-    fastfetch
-    echo "" # Menambahkan jarak ke bawah
+    if [ -f "$HOME/dotfiles/ascii.txt" ]; then
+        # Use simple --logo argument. 
+        # --file-raw might be needed depending on version, but --logo is standard.
+        # We assume the ascii file doesn't have escape codes for colors, so it picks up terminal color.
+        fastfetch --logo "$HOME/dotfiles/ascii.txt" --logo-type file 
+    else
+        fastfetch
+    fi
+    echo ""
+else
+    # Fallback to ASCII art if fastfetch is missing
+    if [ -f "$HOME/dotfiles/ascii.txt" ]; then
+        cat "$HOME/dotfiles/ascii.txt"
+        echo ""
+    fi
 fi
 
 # Attach Blesh at the end
