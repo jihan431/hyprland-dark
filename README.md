@@ -44,4 +44,4 @@ dotfiles/
 ├── rofi/                 # App Launcher configuration
 ├── waybar/               # Waybar configuration + styling + scripts
 ├── install.sh            # Smart script for automated setup & symlinking
-└── README.md
+└── README.md![alt text](image.png)
