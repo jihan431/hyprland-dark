@@ -1,6 +1,6 @@
 # 🍙 My Dotfiles
 
-![My Setup](waybar/image.png)
+![My Setup](waybar/image5.png)
 
 > A minimalist, aesthetic, and functional desktop environment.
 
