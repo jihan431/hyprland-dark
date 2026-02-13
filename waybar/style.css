@@ -15,8 +15,7 @@
 
 window#waybar {
     background: #1f1e2e;
-    color: #c8c8ff;
-    border-right: 1px solid rgba(140, 120, 255, 0.08);
+    color: #9689D2;
 }
 
 .modules-left,
@@ -41,7 +40,7 @@ window#waybar {
     padding-right: 6px;
 }
 #connectivity {
-    background-color: #a78bfa;
+    background-color: #9689D2;
     margin: 0px 20px;
     border-radius: 50px;
     transition: all 0.8s ease;
@@ -70,16 +69,13 @@ window#waybar {
 }
 /* === SEMUA MODUL - ICON ONLY VERTICAL === */
 #custom-launcher,
-#cpu,
-#memory,
-#disk,
 #clock {
     padding-top: 10px;
     padding-bottom: 10px;
     margin: 2px 0;
     border-radius: 0;
     background: transparent;
-    color: #8b8cc8;
+    color: #9689D2;
     font-size: 17px;
 }
 
@@ -129,19 +125,19 @@ window#waybar {
 #custom-battery-fill.level-30          { background: linear-gradient(to top, #ffae00 30%,  #c8c8ff 30%);  }
 #custom-battery-fill.level-35          { background: linear-gradient(to top, #ffae00 35%,  #c8c8ff 35%);  }
 #custom-battery-fill.level-40          { background: linear-gradient(to top, #ffae00 40%,  #c8c8ff 40%);  }
-#custom-battery-fill.level-45          { background: linear-gradient(to top, #a78bfa 45%,  #c8c8ff 45%);  }
-#custom-battery-fill.level-50          { background: linear-gradient(to top, #a78bfa 50%,  #c8c8ff 50%);  }
-#custom-battery-fill.level-55          { background: linear-gradient(to top, #a78bfa 55%,  #c8c8ff 55%);  }
-#custom-battery-fill.level-60          { background: linear-gradient(to top, #a78bfa 60%,  #c8c8ff 60%);  }
-#custom-battery-fill.level-65          { background: linear-gradient(to top, #a78bfa 65%,  #c8c8ff 65%);  }
-#custom-battery-fill.level-70          { background: linear-gradient(to top, #a78bfa 70%,  #c8c8ff 70%);  }
-#custom-battery-fill.level-75          { background: linear-gradient(to top, #a78bfa 75%,  #c8c8ff 75%);  }
-#custom-battery-fill.level-80          { background: linear-gradient(to top, #a78bfa 80%,  #c8c8ff 80%);  }
-#custom-battery-fill.level-85          { background: linear-gradient(to top, #a78bfa 85%,  #c8c8ff 85%);  }
-#custom-battery-fill.level-90          { background: linear-gradient(to top, #a78bfa 90%,  #c8c8ff 90%);  }
-#custom-battery-fill.level-95          { background: linear-gradient(to top, #a78bfa 95%,  #c8c8ff 95%);  }
+#custom-battery-fill.level-45          { background: linear-gradient(to top, #9689D2 45%,  #c8c8ff 45%);  }
+#custom-battery-fill.level-50          { background: linear-gradient(to top, #9689D2 50%,  #c8c8ff 50%);  }
+#custom-battery-fill.level-55          { background: linear-gradient(to top, #9689D2 55%,  #c8c8ff 55%);  }
+#custom-battery-fill.level-60          { background: linear-gradient(to top, #9689D2 60%,  #c8c8ff 60%);  }
+#custom-battery-fill.level-65          { background: linear-gradient(to top, #9689D2 65%,  #c8c8ff 65%);  }
+#custom-battery-fill.level-70          { background: linear-gradient(to top, #9689D2 70%,  #c8c8ff 70%);  }
+#custom-battery-fill.level-75          { background: linear-gradient(to top, #9689D2 75%,  #c8c8ff 75%);  }
+#custom-battery-fill.level-80          { background: linear-gradient(to top, #9689D2 80%,  #c8c8ff 80%);  }
+#custom-battery-fill.level-85          { background: linear-gradient(to top, #9689D2 85%,  #c8c8ff 85%);  }
+#custom-battery-fill.level-90          { background: linear-gradient(to top, #9689D2 90%,  #c8c8ff 90%);  }
+#custom-battery-fill.level-95          { background: linear-gradient(to top, #9689D2 95%,  #c8c8ff 95%);  }
 
-#custom-battery-fill.level-100         { background: #a78bfa; }
+#custom-battery-fill.level-100         { background: #9689D2; }
 
 /* --- Discharging Icon Visibility (White) --- */
 #custom-battery-fill.level-0,
@@ -228,7 +224,7 @@ window#waybar {
     margin: 2px 0;
     border-radius: 0;
     background: transparent;
-    color: #c8c8ff;
+    color: #9689D2;
     font-size: 20px;
     font-weight: 700;
 }
@@ -240,7 +236,7 @@ window#waybar {
 #tray:hover,
 #clock:hover,
 #custom-power:hover {
-    color: #d4d4ff;
+    color: #9689D2;
     border-radius: 0;
 }
 
@@ -267,13 +263,13 @@ window#waybar {
     background: transparent;
     box-shadow: none;
     text-shadow: none;
-    color: #c8c8ff;
+    color: #9689D2;
     border-color: transparent;
 }
 #workspaces button.active {
     font-weight: 700;
     border-radius: 0;
-    color:  #a78bfa;
+    color:  #9689D2;
 }
 
 #workspaces button.urgent {
@@ -284,13 +280,13 @@ window#waybar {
 /* === LAUNCHER === */
 #custom-launcher {
     font-size: 30px;
-    color: #a78bfa;
+    color: #9689D2;
     padding-right: 10px;
 }
 
 /* === CLOCK === */
 #clock {
-    color:#a78bfa;
+    color:#9689D2;
     font-weight: 700;
 }
 
@@ -301,7 +297,7 @@ window#waybar {
 
 /* === BLUETOOTH STATE === */
 #bluetooth.connected {
-    color: #c8c8ff;
+    color: #9689D2;
 }
 
 /* === AUDIO STATE === */
@@ -318,7 +314,7 @@ window#waybar {
 
 /* === POWER BUTTON === */
 #custom-power {
-    color: #a78bfa;
+    color: #9689D2;
     margin: 10px;
     font-size: 25px;
 }
@@ -337,6 +333,6 @@ tooltip {
 }
 
 tooltip label {
-    color: #c8c8ff;
+    color: #9689D2;
     padding: 8px 12px;
 }

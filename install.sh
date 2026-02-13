@@ -54,20 +54,32 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
-# --- 1.5 INSTALASI DEPENDENSI TEMA ---
+# --- 1.5 INSTALASI DEPENDENSI UTAMA & TEMA ---
 echo ""
-log "Memeriksa dan menginstal tema GTK, Ikon, dan Kursor..."
-# Daftar paket yang kamu butuhkan
-PACKAGES="catppuccin-gtk-theme-mocha tela-icon-theme deepin-cursor-theme-git"
+log "Memeriksa dan menginstal paket yang dibutuhkan..."
+
+# Daftar paket lengkap
+# Core: Hyprland, Waybar, Rofi, Eww, Kitty
+# Utils: Dunst (Notif), SWWW (Wallpaper), Polkit (Auth), Nautilus (File), Blueman (BT)
+# Screenshot & Clip: Grim, Slurp, WL-Clipboard
+# Audio & Brightness: Pamixer, Brightnessctl
+# Themes: Catppuccin, Tela Icons, Deepin Cursor, Nordic Cursor
+
+PACKAGES="hyprland waybar rofi-wayland eww-wayland kitty \
+dunst swww polkit-kde-agent nautilus blueman \
+hyprlock hypridle \
+grim slurp wl-clipboard pamixer brightnessctl \
+catppuccin-gtk-theme-mocha tela-icon-theme deepin-cursor-theme-git nordic-theme"
 
 if command -v yay &> /dev/null; then
     yay -S --needed $PACKAGES
-    success "Tema berhasil diinstal via yay."
+    success "Paket berhasil diinstal via yay."
 elif command -v paru &> /dev/null; then
     paru -S --needed $PACKAGES
-    success "Tema berhasil diinstal via paru."
+    success "Paket berhasil diinstal via paru."
 else
-    warn "yay atau paru tidak ditemukan. Lewati instalasi tema otomatis."
+    warn "yay atau paru tidak ditemukan. Lewati instalasi paket otomatis."
+    warn "Silakan instal manual: $PACKAGES"
 fi
 echo ""
 
@@ -81,7 +93,7 @@ link_config() {
 
     # Cek apakah source ada di dotfiles
     if [ ! -d "$source_path" ] && [ ! -f "$source_path" ]; then
-        error "Sumber tidak ditemukan: $source_path"
+        warn "Sumber tidak ditemukan: $source_path (Melewati...)"
         return
     fi
 
@@ -113,11 +125,9 @@ link_config "eww"
 link_config "hypr"
 link_config "waybar"
 link_config "rofi"
-link_config "networkmanager-dmenu"
 link_config "gtk-3.0"
 link_config "gtk-4.0"
-link_config "kitty"  # Hilangkan tanda '#' kalau kamu pakai kitty
-link_config "swww"   # Hilangkan tanda '#' kalau kamu pakai swww
+link_config "kitty"  # Kitty terminal config
 
 # --- 4. LINK FILE (Untuk .bashrc dll) ---
 link_file() {
