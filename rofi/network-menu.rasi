@@ -8,14 +8,15 @@
 window {
     width:          400px;          /* Fixed width for consistency */
     location:       west;
+    height:         40%;
     anchor:         west;
     x-offset:       3px;
     y-offset:       0px;
     
     background-color:   @background-utama;
-    border:             1px;
+    border:             0px;
     border-color:       @border-warna;
-    border-radius:      16px;       /* Softer corners */
+    border-radius:      6px;       /* Softer corners */
     padding:            20px;
 }
 
@@ -32,14 +33,14 @@ inputbar {
 prompt {
     enabled:            true;
     padding:            12px 15px;
-    background-color:   @background-aksen;
+    background-color:   transparent;
     text-color:         @teks-dipilih;
     border-radius:      10px 0px 0px 10px;
     font: "SF Compact Display Medium 12";
 }
 
 entry {
-    background-color:   #252538;    /* Slightly lighter than bg */
+    background-color:   transparent;    /* Slightly lighter than bg */
     text-color:         @teks-utama;
     placeholder:        "Search Networks...";
     placeholder-color:  #6c6c8c;

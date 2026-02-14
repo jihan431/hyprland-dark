@@ -1,5 +1,4 @@
 
-
 * {
     background-utama:    #1e1e2ed0;
     background-aksen:    #9689d219;
@@ -7,17 +6,20 @@
     teks-dipilih:        #ffffffff;
     border-warna:        #9689D2;
 
-    font: "SF Compact Display Medium 48";
+    font: "SF Compact Display Medium 90";
     
     background-color:   transparent;
     text-color:         @teks-utama;
     width:            100%;
     height:           100%;
+    anchor:           center;
+    location:         center;
 }
 
 configuration {
     show-icons: false;
     fake-transparency: true;
+    fullscreen: false;
 }
 
 
@@ -26,8 +28,7 @@ window {
     location:         center;
     anchor:           center;
     x-offset:         0;
-    y-offset:         0;
-    
+    y-offset:         0;   
     background-color: @background-utama;
     children:         [ mainbox ];
 }
@@ -44,8 +45,6 @@ listview {
     dynamic:          true;
     layout:           vertical;
     flow:             horizontal;
-    scrollbar:        false;
-    spacing:          -50px;
 }
 
 element {

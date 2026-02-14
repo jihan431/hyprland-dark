@@ -33,31 +33,39 @@ declare -a NAMES
 INDEX=0
 OPTIONS=""
 
+append_option() {
+    local item="$1"
+    if [ -n "$OPTIONS" ]; then
+        OPTIONS+="\n"
+    fi
+    OPTIONS+="$item"
+}
+
 # 1. Add Control Buttons
 # We use a special prefix in ACTIONS array to identify them
 if [ "$STATUS" == "ON" ]; then
     # Button 1: Turn Off
-    OPTIONS+="<span color='#e78284'><b>  Turn Off</b></span>\n"
+    append_option "Turn Off"
     ACTIONS[$INDEX]="POWER_OFF"
     ((INDEX++))
     
     # Button 2: Rescan
-    OPTIONS+="<span color='#8caaee'><b>󰑐  Rescan</b></span>\n"
+    append_option "Rescan"
     ACTIONS[$INDEX]="RESCAN"
     ((INDEX++))
 else
     # Button 1: Turn On
-    OPTIONS+="<span color='#a6da95'><b>  Turn On</b></span>\n"
+    append_option "Turn On"
     ACTIONS[$INDEX]="POWER_ON"
     ((INDEX++))
     
     # Button 2: Exit
-    OPTIONS+="<span color='#e5c890'><b>󰅖  Exit</b></span>\n"
+    append_option "Exit"
     ACTIONS[$INDEX]="EXIT"
     ((INDEX++))
     
     # In OFF state, we just show these buttons
-    echo -e "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -a 0,1 > /tmp/rofi_bt_selection
+    printf '%b' "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -u 0,1 > /tmp/rofi_bt_selection
     
     # Handle Selection (OFF State)
     SELECTION=$(cat /tmp/rofi_bt_selection)
@@ -87,11 +95,17 @@ fi
 # parsing `bluetoothctl devices`
 # We iterate line by line
 while read -r line; do
+    # Ignore empty/noise lines and only parse device rows.
+    [[ -z "${line// }" ]] && continue
+    [[ "$line" != Device\ * ]] && continue
+
     MAC=$(echo "$line" | cut -d ' ' -f 2)
     NAME=$(echo "$line" | cut -d ' ' -f 3-)
     
     # Skip if MAC is missing
     if [ -z "$MAC" ]; then continue; fi
+    # Fallback label when bluetoothctl does not provide a name.
+    if [ -z "${NAME// }" ]; then NAME="$MAC"; fi
     
     # Check info
     INFO=$(bluetoothctl info "$MAC")
@@ -111,17 +125,17 @@ while read -r line; do
     # Display Format: Icon   Name   Status
     DISPLAY="$ICON   <b>$NAME</b>   $STATUS_MARK <span size='small' color='#6c6c8c'>$MAC</span>"
     
-    OPTIONS+="$DISPLAY\n"
+    append_option "$DISPLAY"
     ACTIONS[$INDEX]="DEVICE"
     MACS[$INDEX]="$MAC"
     NAMES[$INDEX]="$NAME"
     ((INDEX++))
     
-done < <(bluetoothctl devices)
+done < <(bluetoothctl devices 2>/dev/null)
 
 # Show Menu
-# -a 0,1 marks the first two items (buttons) as active
-CHOSEN_INDEX=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -a 0,1)
+# -u 0,1 marks the first two items (buttons) as urgent
+CHOSEN_INDEX=$(printf '%b' "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -u 0,1)
 
 if [ -z "$CHOSEN_INDEX" ]; then exit 0; fi
 

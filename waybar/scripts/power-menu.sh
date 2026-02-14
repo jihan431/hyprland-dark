@@ -2,7 +2,8 @@
 
 options="\n\n\n"
 
-chosen="$(echo -e "$options" | rofi -dmenu -i -p "Power" -theme ~/.config/rofi/power.rasi)"
+chosen="$(echo -e "$options" | rofi -dmenu drun -theme power.rasi -theme-str '#window { fullscreen: true; }'
+)",
 
 case $chosen in
     "")

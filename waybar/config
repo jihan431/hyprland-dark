@@ -1,11 +1,14 @@
 {
   "layer": "top",
   "position": "left",
-  "mod": "dock",
   "exclusive": true,
+  "mod": "dock",
   "passthrough": false,
-  "gtk-layer-shell": true,
+  "gtk-layer-shell": false,
   "width": 80,
+  "margin-top": 3,
+  "margin-bottom": 3,
+  "margin-left": 3,
   "fixed-center": true,
   "spacing": 0,
   "modules-left": [
@@ -17,6 +20,7 @@
   "modules-center": [],
   "modules-right": [
     "tray",
+    "wlr/taskbar",
     "custom/battery-fill",
     "custom/power"
   ],
@@ -150,5 +154,19 @@
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "on-click": "/home/lyon/.config/waybar/scripts/rofi-bluetooth.sh"
+  },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 40,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-right": "close",
+    "ignore-list": [
+      "kitty",
+      "nwg-look"
+    ],
+    "app_ids-mapping": {
+      "firefox-developer-edition": "firefox-developer-edition"
+    }
   }
 }

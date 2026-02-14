@@ -1,5 +1,5 @@
 * {
-    background-utama:    #1e1e2ee2;
+    background-utama:    #1e1e2e;
     background-aksen:    #9689d219;
     teks-utama:          #d9e0ee;
     teks-dipilih:        #ffffffff;
@@ -30,13 +30,17 @@ configuration {
 }
 
 window {
-    location:       center;
-    width:          700px;
-    border-radius:  16px;    
+    location:       west;
+    width:          500px;
+    height:         99.3%;
+    anchor:         west;
+    border-radius:  8px;    
     background-color:   @background-utama;
     border:             0px;
     border-color:       @border-warna;
     children:           [ mainbox ];
+    x-offset:       3px;
+    y-offset:       0px;
 }
 
 mainbox {
@@ -78,8 +82,7 @@ entry {
 
 listview {
     background-color:   transparent;
-    columns:            5;
-    lines:              5;
+    columns:            4;
     spacing:            0px;
     cycle:              false;
     dynamic:            false;
@@ -90,7 +93,7 @@ listview {
 
 element {
     orientation: vertical;
-    padding:     20px 20px;
+    padding:     10px 0px;
     spacing:     0px;
     border-radius: 12px;
     background-color: transparent;

@@ -1,5 +1,9 @@
 @import "lyon.rasi"
 
+configuration {
+    show-icons: false;
+}
+
 /* Overwrite font to match system preference if needed, otherwise inherit */
 * {
     font: "SF Compact Display Medium 12";
@@ -7,31 +11,41 @@
 
 window {
     width:          400px;          /* Fixed width for consistency */
+    height:         40%;
     location:       west;         /* Center for better visibility */
     anchor:         west;
     x-offset:       3px;
     y-offset:       0px;
     
     background-color:   @background-utama;
-    border:             1px;
+    border:             0px;
     border-color:       @border-warna;
-    border-radius:      16px;       /* Softer corners */
+    border-radius:      6px;       /* Softer corners */
     padding:            20px;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing:          12px;
+    padding:          0px;
+    children:         [ inputbar, listview ];
 }
 
 /* Header Area (Input + Prompt) */
 inputbar {
-    background-color:   transparent;
+    background-color:   @background-aksen;
     text-color:         @teks-utama;
+    border:             1px;
+    border-color:       @border-warna;
     border-radius:      10px;
     margin:             0px 0px 15px 0px;
-    padding:            0px;
+    padding:            2px;
     children:           [ prompt, entry ];
 }
 
 prompt {
     enabled:            true;
-    padding:            12px 15px;
+    padding:            10px 12px;
     background-color:   transparent;
     text-color:         @teks-dipilih;
     border-radius:      10px 0px 0px 10px;
@@ -43,7 +57,7 @@ entry {
     text-color:         @teks-utama;
     placeholder:        "Search Devices...";
     placeholder-color:  #6c6c8c;
-    padding:            12px 15px;
+    padding:            10px 12px;
     border-radius:      0px 10px 10px 0px;
     vertical-align:     0.5;
 }
@@ -51,13 +65,13 @@ entry {
 /* List of Devices */
 listview {
     background-color:   transparent;
-    columns:            2;
+    columns:            1;
     lines:              8;
     spacing:            6px;
     cycle:              true;
     dynamic:            true;
     layout:             vertical;
-    flow:               horizontal;   /* Ensure vertical flow for list */
+    flow:               vertical;
     scrollbar:          false;
     margin:             5px 0px 0px 0px;
 }
@@ -68,16 +82,18 @@ element {
     text-color:         @teks-utama;
     orientation:        horizontal; /* Force horizontal for list items */
     border-radius:      10px;
-    padding:            10px 5px;
-    spacing:            0px;        /* Reset spacing */
+    padding:            8px 10px;
+    spacing:            8px;
+    border:             1px;
+    border-color:       transparent;
 }
 
 element-icon {
     background-color:   transparent;
     text-color:         inherit;
-    size:               24px;       /* Reset icon size */
+    size:               20px;
     cursor:             inherit;
-    margin:             0px 10px 0px 0px;
+    margin:             0px 8px 0px 0px;
     vertical-align:     0.5;
     horizontal-align:   0.0;
 }
@@ -86,35 +102,77 @@ element-text {
     enabled:            true;
     background-color:   transparent;
     text-color:         inherit;
+    expand:             true;
     vertical-align:     0.5;
     horizontal-align:   0.0;        /* Left align text */
     cursor:             inherit;
 }
 
+element.normal.normal {
+    background-color:   transparent;
+    border-color:       @background-aksen;
+}
+
+element.alternate.normal {
+    background-color:   transparent;
+    border-color:       @background-aksen;
+}
+
 /* Hover & Selection Effects */
-element selected {
+element.selected.normal {
     background-color:   @background-aksen;
     text-color:         @teks-dipilih;
     border:             0px;
 }
 
-element selected element-text {
+element.selected.normal element-text {
     text-color:         @teks-dipilih;
 }
 
-element selected element-icon {
+element.selected.normal element-icon {
     text-color:         @teks-dipilih;
 }
 
-element active {
-    background-color:   @background-aksen;
+/* Button Styling (Turn On/Off, Rescan) */
+element.normal.urgent {
+    background-color:   #9689d259;
     text-color:         @teks-dipilih;
-    border-radius:      10px;
+    border-radius:      12px;
     border:             1px;
     border-color:       @border-warna;
+    padding:            10px 12px;
+    spacing:            6px;
 }
 
-element active selected {
+element.alternate.urgent {
+    background-color:   #9689d259;
+    text-color:         @teks-dipilih;
+    border-radius:      12px;
+    border:             1px;
+    border-color:       @border-warna;
+    padding:            10px 12px;
+    spacing:            6px;
+}
+
+element.selected.urgent {
     background-color:   @border-warna;
     text-color:         @teks-dipilih;
+}
+
+element.normal.urgent element-text {
+    text-color:         @teks-dipilih;
+    horizontal-align:   0.0;
+    expand:             true;
+}
+
+element.selected.urgent element-text {
+    text-color:         @teks-dipilih;
+    horizontal-align:   0.0;
+    expand:             true;
+}
+
+element.alternate.urgent element-text {
+    text-color:         @teks-dipilih;
+    horizontal-align:   0.0;
+    expand:             true;
 }
