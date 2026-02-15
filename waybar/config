@@ -159,8 +159,10 @@
     "format": "{icon}",
     "icon-size": 45,
     "tooltip-format": "{title}",
+    "notifications": true,
     "on-click": "activate",
     "on-click-right": "close",
+    "show_all_outputs": true,
     "ignore-list": [
       "kitty",
       "nwg-look"
