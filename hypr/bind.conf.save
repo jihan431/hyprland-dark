@@ -2,14 +2,14 @@ $mainMod = SUPER
 
 bind = $mainMod, RETURN, exec, $terminal
 bind = $mainMod, Q, killactive, 
-#bind = $mainMod, M, exit,
-bind = $mainMod, N, exec ,~/.config/waybar/scripts/ssh.sh
+bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, $fileManager
 bind = $mainMod, W, togglefloating, 
 bind = $mainMod, F, fullscreen, 
 bind = $mainMod, SPACE, exec, $menu
 bind = $mainMod, R, exec, ~/.config/waybar/scripts/waybar.sh
 #bind = $mainMod, A, exec, antigravity
+bind = $mainMod, 
 bind = $mainMod, V, exec, code
 bind = $mainMod, O, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
