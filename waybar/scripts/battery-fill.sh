@@ -19,7 +19,7 @@ get_battery_info() {
     local icon=" "
     if [ "$status" = "Charging" ] || [ "$status" = "Full" ]; then
         class="level-${level}-charging"
-        icon="󱐋"
+        icon=" "
     fi
 
     # Add state suffix

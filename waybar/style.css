@@ -63,7 +63,6 @@ window#waybar {
   font-size: 15px;
 }
 
-
 /* === SEMUA MODUL - ICON ONLY VERTICAL === */
 #custom-launcher,
 #clock {
@@ -250,41 +249,41 @@ tooltip label {
   background: linear-gradient(to top, #ffae00 40%, #c8c8ff 40%);
 }
 #custom-battery-fill.level-45 {
-  background: linear-gradient(to top, #9689d2 45%, #c8c8ff 45%);
+  background: linear-gradient(to top, #4e4e7a 45%, #c8c8ff 45%);
 }
 #custom-battery-fill.level-50 {
-  background: linear-gradient(to top, #9689d2 50%, #c8c8ff 50%);
+  background: linear-gradient(to top, #4e4e7a 50%, #c8c8ff 50%);
 }
 #custom-battery-fill.level-55 {
-  background: linear-gradient(to top, #9689d2 55%, #c8c8ff 55%);
+  background: linear-gradient(to top, #4e4e7a 55%, #c8c8ff 55%);
 }
 #custom-battery-fill.level-60 {
-  background: linear-gradient(to top, #9689d2 60%, #c8c8ff 60%);
+  background: linear-gradient(to top, #4e4e7a 60%, #c8c8ff 60%);
 }
 #custom-battery-fill.level-65 {
-  background: linear-gradient(to top, #9689d2 65%, #c8c8ff 65%);
+  background: linear-gradient(to top, #4e4e7a 65%, #c8c8ff 65%);
 }
 #custom-battery-fill.level-70 {
-  background: linear-gradient(to top, #9689d2 70%, #c8c8ff 70%);
+  background: linear-gradient(to top, #4e4e7a 70%, #c8c8ff 70%);
 }
 #custom-battery-fill.level-75 {
-  background: linear-gradient(to top, #9689d2 75%, #c8c8ff 75%);
+  background: linear-gradient(to top, #4e4e7a 75%, #c8c8ff 75%);
 }
 #custom-battery-fill.level-80 {
-  background: linear-gradient(to top, #9689d2 80%, #c8c8ff 80%);
+  background: linear-gradient(to top, #4e4e7a 80%, #c8c8ff 80%);
 }
 #custom-battery-fill.level-85 {
-  background: linear-gradient(to top, #9689d2 85%, #c8c8ff 85%);
+  background: linear-gradient(to top, #4e4e7a 85%, #c8c8ff 85%);
 }
 #custom-battery-fill.level-90 {
-  background: linear-gradient(to top, #9689d2 90%, #c8c8ff 90%);
+  background: linear-gradient(to top, #4e4e7a 90%, #c8c8ff 90%);
 }
 #custom-battery-fill.level-95 {
-  background: linear-gradient(to top, #9689d2 95%, #c8c8ff 95%);
+  background: linear-gradient(to top, #4e4e7a 95%, #c8c8ff 95%);
 }
 
 #custom-battery-fill.level-100 {
-  background: #9689d2;
+  background: #4e4e7a;
 }
 
 #custom-battery-fill.level-0,
@@ -311,6 +310,7 @@ tooltip label {
   font-size: 20px;
   color: #000000;
   min-height: 900px;
+  margin-left: 5px;
 }
 
 #custom-battery-fill.level-0-charging,
@@ -336,9 +336,9 @@ tooltip label {
 #custom-battery-fill.level-100-charging {
   font-size: 20px;
   color: #000000;
-  min-height: 885px;
-  border-radius: 8 8 8 8px;
-  margin-left: 5px;
+  min-height: 880px;
+  margin: 2px;
+  border-radius: 0 10 10 0px;
 }
 
 #custom-battery-fill.level-0-charging {
