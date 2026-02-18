@@ -7,7 +7,7 @@
   :monitor 0
   :stacking "bottom"
   :wm-ignore false
-  :geometry (geometry :x "150px" 
+  :geometry (geometry :x "100px" 
                       :y "10px" 
                       :width "440px" 
                       :height "700px" 

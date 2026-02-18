@@ -1,5 +1,5 @@
 $base-color: rgba(30, 30, 46, 0.851);
-$base-text: #9689D2;
+$base-text: #9689d2;
 
 window {
   background-color: transparent;
@@ -11,18 +11,18 @@ window {
   padding-left: 10px;
 }
 
-.time-hour, .time-min {
-  font-family: "Jersey 10", sans-serif;
-  font-size: 230pt;
-  font-weight: 500;
+.time-hour,
+.time-min {
+  font-family: "SF Compact Display";
+  font-size: 190pt;
+  font-weight: 900;
   color: $base-color;
 }
 
 .time-hour {
-    margin-bottom: -100px;
-    
+  margin-bottom: -100px;
 }
 
 .time-min {
-    padding-bottom: 0px;
+  padding-bottom: 0px;
 }

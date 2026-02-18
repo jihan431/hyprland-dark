@@ -2,26 +2,28 @@
   {
     "position": "left",
     "exclusive": true,
-    "mod": "dock",
-    "height": 0,
+    "reload_style_on_change": true,
+    "mode": "dock",
     "modules-center": [
       "custom/battery-fill"
     ],
     "custom/battery-fill": {
       "exec": "/home/lyon/.config/waybar/scripts/battery-fill.sh",
       "return-type": "json",
-      "interval": 5,
+      "interval": 2,
       "tooltip": true
     }
   },
   {
     "position": "left",
     "exclusive": true,
-    "mod": "dock",
+    "mode": "dock",
     "passthrough": false,
+    "reload_style_on_change": true,
     "gtk-layer-shell": false,
     "width": 70,
-    "fixed-center": true,
+    "fixed-center": false,
+    "expand-center": true,
     "spacing": 0,
     "modules-left": [
       "custom/launcher",
@@ -30,17 +32,19 @@
       "tray",
       "group/connectivity"
     ],
-    "modules-center": [],
+    "modules-center": [
+    ],
     "modules-right": [
+      "custom/cava",
       "custom/power"
     ],
     "group/connectivity": {
       "orientation": "vertical",
       "drawer": {
-        "transition-duration": 500,
+        "transition-duration": 800,
         "children-class": "connectivity-child",
         "transition-left-to-right": true,
-        "click-to-reveal": true
+        "click-to-reveal": false
       },
       "modules": [
         "custom/connectivity-toggle",
@@ -158,6 +162,11 @@
       "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
       "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
       "on-click": "/home/lyon/.config/waybar/scripts/rofi-bluetooth.sh"
+    },
+    "custom/cava": {
+      "format": "{}",
+      "exec": "~/.config/waybar/scripts/cava.sh",
+      "rotate": 270
     }
   }
 ]
