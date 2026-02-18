@@ -432,8 +432,24 @@ tooltip label {
 }
 
 #custom-cava {
-    padding: 0;
-    margin: 0;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 15px; /* Adjust size if needed to fit width */
+  padding: 8px 0 10px 0;
+  margin: 4px 0 2px 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #b6adf0;
+  min-width: 0;
 }
+#custom-cava.idle {
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+#custom-cava.active {
+  border: 2px solid #9689d2;
+  margin: 12px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(182, 173, 240, 0.15);
+}
+

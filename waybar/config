@@ -32,8 +32,7 @@
       "tray",
       "group/connectivity"
     ],
-    "modules-center": [
-    ],
+    "modules-center": [],
     "modules-right": [
       "custom/cava",
       "custom/power"
@@ -165,8 +164,10 @@
     },
     "custom/cava": {
       "format": "{}",
+      "return-type": "json",
       "exec": "~/.config/waybar/scripts/cava.sh",
-      "rotate": 270
+      "rotate": 270,
+      "tooltip": false
     }
   }
 ]
