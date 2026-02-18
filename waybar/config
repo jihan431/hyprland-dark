@@ -29,11 +29,11 @@
       "custom/launcher",
       "clock",
       "hyprland/workspaces",
-      "tray",
-      "group/connectivity"
+      "tray"
     ],
     "modules-center": [],
     "modules-right": [
+      "group/connectivity",
       "custom/cava",
       "custom/power"
     ],
@@ -42,7 +42,7 @@
       "drawer": {
         "transition-duration": 800,
         "children-class": "connectivity-child",
-        "transition-left-to-right": true,
+        "transition-left-to-right": false,
         "click-to-reveal": false
       },
       "modules": [

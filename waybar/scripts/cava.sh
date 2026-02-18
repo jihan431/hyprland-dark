@@ -2,7 +2,7 @@
 
 set -u
 
-readonly BARS="${CAVA_BARS:-8}"
+readonly BARS="${CAVA_BARS:-12}"
 readonly MAX_LEVEL="${CAVA_MAX_LEVEL:-8}"
 readonly FALL_STEP="${CAVA_FALL_STEP:-1}"
 readonly NOISE_GATE="${CAVA_NOISE_GATE:-1}"
@@ -25,7 +25,7 @@ cat >"$config_file" <<EOF
 [general]
 bars = ${BARS}
 framerate = 60
-sensitivity = 120
+sensitivity = 100
 
 [output]
 method = raw
