@@ -14,15 +14,15 @@ window {
 .time-hour,
 .time-min {
   font-family: "SF Compact Display";
-  font-size: 190pt;
+  font-size: 170pt;
   font-weight: 900;
   color: $base-color;
 }
 
 .time-hour {
-  margin-bottom: -100px;
+  margin-bottom: 0px;
 }
 
 .time-min {
-  padding-bottom: 0px;
+  margin-top: -50px;
 }
