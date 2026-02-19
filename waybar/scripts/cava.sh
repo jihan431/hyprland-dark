@@ -44,6 +44,8 @@ frame_counter=0
 media_playing=0
 
 update_media_state() {
+    local statuses status
+
     if (( playerctl_available == 0 )); then
         return
     fi
@@ -52,12 +54,19 @@ update_media_state() {
         return
     fi
 
-    status="$(playerctl status 2>/dev/null | head -n1 || true)"
-    if [[ "$status" == "Playing" ]]; then
-        media_playing=1
-    else
-        media_playing=0
+    # Evaluate all available players so mixed states (e.g. one paused, one playing)
+    # do not incorrectly mark the widget as idle.
+    if ! statuses="$(playerctl --all-players status 2>/dev/null)"; then
+        statuses="$(playerctl status 2>/dev/null || true)"
     fi
+
+    media_playing=0
+    while IFS= read -r status; do
+        if [[ "$status" == "Playing" ]]; then
+            media_playing=1
+            break
+        fi
+    done <<<"$statuses"
 }
 
 render_frame() {
