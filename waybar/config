@@ -55,7 +55,7 @@
       ]
     },
     "custom/connectivity-toggle": {
-      "format": "󰍲",
+      "format": "󰍜",
       "tooltip": false
     },
     "clock": {

@@ -5,7 +5,8 @@ set -u
 readonly BARS="${CAVA_BARS:-12}"
 readonly MAX_LEVEL="${CAVA_MAX_LEVEL:-8}"
 readonly FALL_STEP="${CAVA_FALL_STEP:-1}"
-readonly NOISE_GATE="${CAVA_NOISE_GATE:-1}"
+readonly NOISE_GATE="${CAVA_NOISE_GATE:-0}"
+readonly MIN_LEVEL_WHEN_PLAYING="${CAVA_MIN_LEVEL_WHEN_PLAYING:-1}"
 readonly PLAYERCTL_POLL_EVERY="${CAVA_PLAYERCTL_POLL_EVERY:-12}"
 readonly LEVELS=" ▁▂▃▄▅▆▇█"
 
@@ -92,6 +93,11 @@ render_frame() {
 
         if (( level < 0 )); then
             level=0
+        fi
+
+        # Keep a faint baseline while media is playing so the widget never disappears.
+        if (( media_playing == 1 )) && (( level == 0 )) && (( MIN_LEVEL_WHEN_PLAYING > 0 )); then
+            level=$MIN_LEVEL_WHEN_PLAYING
         fi
 
         previous_levels[i]=$level
