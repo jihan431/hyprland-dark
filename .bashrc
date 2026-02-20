@@ -33,7 +33,7 @@ export NVM_DIR="$HOME/.nvm"
 # --- MINIMALIST PS1 PROMPT ---
 C_CYAN='\[\e[1;36m\]'
 C_RESET='\[\e[0m\]'
-PS1="${C_CYAN}󰣇  \u ${C_RESET}• ${C_CYAN}\w ${C_CYAN}❯${C_RESET} "
+PS1="${C_CYAN} \u ${C_RESET}${C_CYAN}\w ${C_CYAN}❯${C_RESET} "
 
 # --- ASCII Art & Fastfetch ---
 if command -v fastfetch &> /dev/null; then
