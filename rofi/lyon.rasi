@@ -46,7 +46,7 @@ window {
     border-color:       #9689d250;
     background-color:   @bg;
     children:           [ mainbox ];
-    x-offset:           3px;
+    x-offset:           15px;
     y-offset:           0px;
 }
 
@@ -61,8 +61,6 @@ inputbar {
     children:           [ icon-search, entry ];
     background-color:   @bg-soft;
     border-radius:      12px;
-    border:             1px;
-    border-color:       #9689d275;
     padding:            10px 12px;
     spacing:            10px;
 }
@@ -100,8 +98,6 @@ listview {
 element {
     orientation:        vertical;
     border-radius:      14px;
-    border:             1px;
-    border-color:       #9689d21f;
     background-color:   @bg-card;
     padding:            10px 6px;
     spacing:            4px;
@@ -126,15 +122,12 @@ element-text {
 element selected {
     background-color:   #9689d233;
     text-color:         @fg;
-    border-color:       #9689d2a8;
 }
 
 mode-switcher {
     enabled:            true;
     spacing:            8px;
     background-color:   transparent;
-    border:             0px;
-    border-radius:      12px;
     padding:            0px;
 }
 
@@ -142,13 +135,10 @@ button {
     background-color:   @bg-soft;
     text-color:         @fg-muted;
     border-radius:      12px;
-    border:             1px;
-    border-color:       #9689d21f;
     padding:            10px 12px;
 }
 
 button selected {
     background-color:   #9689d233;
     text-color:         @fg;
-    border-color:       #9689d2a8;
 }
