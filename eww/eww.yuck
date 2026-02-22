@@ -1,20 +1,296 @@
-;; 1. DEFINISI VARIABEL (HARUS DI ATAS)
+;; =============================================
+;; VARIABLES
+;; =============================================
+
+;; Clock
 (defpoll hour :interval "1s" `date +%H`)
 (defpoll min  :interval "1s" `date +%M`)
 
-;; 2. DEFINISI WINDOW
+;; WiFi status: 1 = ON, 0 = OFF
+(defpoll wifi-enabled :interval "500ms"
+  `~/dotfiles/eww/scripts/wifi-status.sh`)
+
+(defpoll wifi-list :interval "15s" :initial "[]"
+  `~/dotfiles/eww/scripts/wifi-list.sh`)
+
+;; SSID yang sedang aktif/connected
+(defpoll active-ssid :interval "3s" :initial ""
+  `nmcli -t -f ACTIVE,SSID device wifi 2>/dev/null | awk -F: '/^yes/{print $2}'`)
+
+;; State: jaringan yang diklik di list
+(defvar selected-wifi "")
+(defvar show-wifi-action false)
+
+;; Bluetooth status
+(defpoll bt-enabled :interval "1s"
+  `bluetoothctl show 2>/dev/null | grep -c "Powered: yes"`)
+
+(defpoll bt-list :interval "10s" :initial "[]"
+  `~/dotfiles/eww/scripts/bt-list.sh`)
+
+;; Volume (0-100)
+(defpoll volume :interval "1s"
+  :initial `pamixer --get-volume 2>/dev/null || echo 0`
+  `pamixer --get-volume 2>/dev/null || echo 0`)
+
+;; Brightness (0-100)
+(defpoll brightness :interval "1s"
+  :initial `echo $(($(brightnessctl get) * 100 / $(brightnessctl max)))`
+  `echo $(($(brightnessctl get) * 100 / $(brightnessctl max)))`)
+
+;; Microphone (0-100)
+(defpoll mic-volume :interval "1s"
+  :initial `pamixer --default-source --get-volume 2>/dev/null || echo 0`
+  `pamixer --default-source --get-volume 2>/dev/null || echo 0`)
+
+(defpoll mic-muted :interval "1s"
+  :initial `pamixer --default-source --get-mute 2>/dev/null || echo false`
+  `pamixer --default-source --get-mute 2>/dev/null || echo false`)
+
+;; Recording status
+(defpoll recording-active :interval "1s"
+  :initial "false"
+  "pgrep -x wf-recorder > /dev/null && echo true || echo false")
+
+;; State: expand/collapse list panels
+(defvar show-wifi false)
+(defvar show-bt false)
+
+;; Password form native
+(defvar show-password-form false)
+(defvar connecting-ssid "")
+(defvar wifi-password "")
+
+;; =============================================
+;; WIDGETS
+;; =============================================
+
+;; --- Capture Toggles ---
+(defwidget capture-toggles []
+  (box :class "capture-toggles-row"
+       :orientation "h"
+       :space-evenly true
+       :spacing 10
+    (button :class "capture-btn"
+            :onclick "/home/lyon/dotfiles/eww/scripts/record.sh"
+      (box :orientation "h" :space-evenly false :valign "center" :halign "center"
+        (label :class {recording-active == "true" ? "rc-toggle-icon record-active" : "rc-toggle-icon"} 
+               :text "󰑊")
+        (label :class "capture-label" :text {recording-active == "true" ? "REC" : "Record"})))
+    
+    (button :class "capture-btn"
+            :onclick "/home/lyon/dotfiles/eww/scripts/screenshot.sh region &"
+      (box :orientation "h" :space-evenly false :valign "center" :halign "center"
+        (label :class "sc-toggle-icon" :text "󱣵")
+        (label :class "capture-label" :text "Screenshot")))))
+
+;; --- WiFi network item ---
+(defwidget wifi-item [net]
+  (box :orientation "v" :space-evenly false
+    (box :orientation "h" :space-evenly false :valign "center"
+         :class {net.active ? "net-item connected" : "net-item"}
+      (label :class {net.active ? "net-icon active" : "net-icon"}
+             :text {net.active ? "󰤨" : "󰤡"})
+      (label :class "net-name" :text {net.ssid}
+             :hexpand true :halign "start" :truncate true)
+      (label :class "net-signal" :text "${net.signal}%" :halign "end")
+      (button
+        :class {net.active ? "net-action-btn disconnect" : "net-action-btn connect"}
+        :onclick "bash -c '~/dotfiles/eww/scripts/wifi-action.sh \"${net.ssid}\" \"${net.security}\" &'"
+        (label :text {net.active ? "󱘖" : "󱘖"})))
+    (revealer :transition "slidedown"
+              :reveal {show-password-form && connecting-ssid == net.ssid}
+              :duration "200ms"
+      (box :class "password-form-inline" :orientation "v" :space-evenly false
+        (input :class "wifi-pass-input"
+               :placeholder "Password..."
+               :value wifi-password
+               :password true
+               :onchange "eww --config $HOME/dotfiles/eww update wifi-password={}"
+               :onaccept "bash -c '~/dotfiles/eww/scripts/wifi-connect.sh \"${connecting-ssid}\" \"${wifi-password}\" &'; eww --config $HOME/dotfiles/eww update show-password-form=false wifi-password=''")
+        (box :class "password-actions" :orientation "h" :space-evenly true :spacing 10
+          (button :class "action-btn connect"
+            :onclick "bash -c '~/dotfiles/eww/scripts/wifi-connect.sh \"${connecting-ssid}\" \"${wifi-password}\" &'; eww --config $HOME/dotfiles/eww update show-password-form=false wifi-password=''"
+            (label :text "Connect"))
+          (button :class "action-btn disconnect"
+            :onclick "eww --config $HOME/dotfiles/eww update show-password-form=false wifi-password=''"
+            (label :text "Cancel")))))))
+
+;; --- WiFi expandable panel ---
+(defwidget wifi-panel []
+  (revealer :transition "slidedown"
+            :reveal {show-wifi && wifi-enabled == 1}
+            :duration "200ms"
+    (box :orientation "v" :space-evenly false
+      (scroll :vscroll true :hscroll false :height {show-password-form ? 280 : 200}
+        (box :class "list-panel" :orientation "v" :space-evenly false
+          (for net in wifi-list
+            (wifi-item :net net)))))))
+
+;; --- WiFi Toggle row ---
+(defwidget wifi-toggle []
+  (box :orientation "v" :space-evenly false
+    (box :class "toggle-row"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (button :class "toggle-info-area" :hexpand true
+              :onclick "eww --config $HOME/dotfiles/eww update show-wifi=${show-wifi ? false : true} show-wifi-action=false"
+        (box :orientation "h" :space-evenly false :valign "center"
+          (label :class "toggle-icon" :text "󰀃" :halign "center")
+          (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+            (label :class "toggle-label" :text "Wi-Fi" :halign "start")
+            (label :class "toggle-sublabel" :text {wifi-enabled == 1 ? (active-ssid != "" ? active-ssid : "Disconnected") : "Off"}
+                   :halign "start" :valign "center"))))
+      (button
+        :class {wifi-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
+        :onclick "~/dotfiles/eww/scripts/wifi-toggle.sh"
+        (label :text {wifi-enabled == 1 ? "ON" : "OFF"})))
+    (wifi-panel)))
+
+;; --- BT device item ---
+(defwidget bt-item [dev]
+  (button :class {dev.connected ? "net-item connected" : "net-item"}
+          :onclick "bash -c '~/dotfiles/eww/scripts/bt-action.sh \"${dev.mac}\" \"${dev.name}\" &'"
+    (box :orientation "h" :space-evenly false :valign "center"
+      (label :class "net-icon"
+             :text {dev.connected ? "󰂱" : "󰂯"})
+      (label :class "net-name" :text {dev.name}
+             :hexpand true :halign "start" :truncate true))))
+
+;; --- BT expandable panel ---
+(defwidget bt-panel []
+  (revealer :transition "slidedown"
+            :reveal show-bt
+            :duration "200ms"
+    (box :orientation "v" :space-evenly false :hexpand true
+      (box :class "panel-header" :orientation "h" :space-evenly false :hexpand true
+        (label :class "panel-title" :text "Devices" :hexpand true :halign "start")
+        (button :class "list-btn"
+                :onclick "bash -c '~/dotfiles/eww/scripts/bt-scan.sh &'"
+          (label :text "SCAN")))
+      (scroll :vscroll true :hscroll false :height 160
+        (box :class "list-panel" :orientation "v" :space-evenly false
+          (for dev in bt-list
+            (bt-item :dev dev)))))))
+
+;; --- BT Toggle row ---
+(defwidget bt-toggle []
+  (box :orientation "v" :space-evenly false
+    (box :class "toggle-row"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (button :class "toggle-info-area" :hexpand true
+              :onclick "eww --config $HOME/dotfiles/eww update show-bt=${show-bt ? false : true}"
+        (box :orientation "h" :space-evenly false :valign "center"
+          (label :class "bt-toggle-icon" :text "󰂯" :halign "center")
+          (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+            (label :class "toggle-label" :text "Bluetooth" :halign "start")
+            (label :class "toggle-sublabel" :text {bt-enabled == 1 ? "On" : "Off"}
+                   :halign "start" :valign "center"))))
+      (button
+        :class {bt-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
+        :onclick "~/dotfiles/eww/scripts/bt-toggle.sh"
+        (label :text {bt-enabled == 1 ? "ON" : "OFF"})))
+    (bt-panel)))
+
+;; --- Volume Slider ---
+(defwidget volume-slider []
+  (box :class "slider-row"
+       :orientation "h"
+       :space-evenly false
+    (button :onclick "pamixer -t"
+            :class "slider-icon-btn"
+      (label :class "slider-icon vol-icon" :text {volume > 60 ? "󰕾" : volume > 20 ? "󰖀" : "󰕿"}))
+    (scale :class "cc-scale"
+           :hexpand true
+           :min 0 :max 80 :value volume
+           :onchange "pamixer --set-volume {}")))
+
+;; --- Brightness Slider ---
+(defwidget brightness-slider []
+  (box :class "slider-row"
+       :orientation "h"
+       :space-evenly false
+    (button :class "slider-icon-btn"
+      (label :class "slider-icon bright-icon" :text {brightness > 66 ? "󰃠" : brightness > 33 ? "󰃟" : "󰃞"}))
+    (scale :class "cc-scale"
+           :hexpand true
+           :min 10 :max 100 :value brightness
+           :onchange "brightnessctl set {}%")))
+
+;; --- Microphone Slider ---
+(defwidget mic-slider []
+  (box :class "slider-row"
+       :orientation "h"
+       :space-evenly false
+    (button :onclick "pamixer --default-source -t"
+            :class "slider-icon-btn"
+      (label :class "slider-icon mic-icon" :text {mic-muted == "true" ? "󰍭" : "󰍬"}))
+    (scale :class "cc-scale"
+           :hexpand true
+           :min 0 :max 30 :value mic-volume
+           :onchange "pamixer --default-source --set-volume {}")))
+
+;; --- Main Control Center widget ---
+(defwidget cc-main []
+  (box :class "cc-box"
+       :orientation "v"
+       :space-evenly false
+    (box :class "cc-header"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (label :class "cc-icon" :text "")
+      (label :class "cc-title" :text "Control Center"
+             :hexpand true :halign "start")
+      (button :class "cc-close-btn"
+              :onclick "eww --config $HOME/dotfiles/eww close control_center"
+        (label :text "󰅖")))
+    (box :class "cc-divider")
+    (box :class "cc-section"
+         :orientation "v"
+         :space-evenly false
+      (wifi-toggle)
+      (bt-toggle))
+    (box :class "cc-divider")
+    (capture-toggles)
+    (box :class "cc-divider")
+    (box :class "cc-section"
+         :orientation "v"
+         :space-evenly false
+      (volume-slider)
+      (mic-slider)
+      (brightness-slider))))
+
+;; =============================================
+;; WINDOWS
+;; =============================================
+
 (defwindow clock
   :monitor 0
   :stacking "bottom"
   :wm-ignore false
-  :geometry (geometry :x "100px" 
-                      :y "10px" 
-                      :width "440px" 
-                      :height "700px" 
-                      :anchor "center left") 
-  (box :orientation "v" 
-       :space-evenly false 
+  :geometry (geometry :x "100px"
+                      :y "10px"
+                      :width "440px"
+                      :height "700px"
+                      :anchor "center left")
+  (box :orientation "v"
+       :space-evenly false
        :class "clock-box"
     (label :text hour :class "time-hour")
     (label :text min  :class "time-min")))
-    
+
+(defwindow control_center
+  :monitor 0
+  :stacking "overlay"
+  :wm-ignore true
+  :focusable true
+  :geometry (geometry :x "12px"
+                      :y "0px"
+                      :width "420px"
+                      :height "0px"
+                      :anchor "center left")
+  (cc-main))

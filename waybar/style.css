@@ -32,30 +32,22 @@ window#waybar {
 #backlight {
   padding-right: 6px;
 }
-#connectivity {
+#custom-cc {
   background-color: #9689d2;
-  margin: 0px 0px;
   transition: all 0.8s ease;
-  padding-right: 0px;
+  padding-right: 4px;
   border-radius: 10px;
   margin-top: 10px;
   min-width: 0px;
+  padding: 5 3 5 0px;
   margin: 13px;
+  color: #1e1e2e;
 }
-
-#custom-connectivity-toggle {
-  min-height: 0px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 2px 0;
-  background: transparent;
-  color: rgba(25, 30, 45, 0.95);
-  font-size: 20px;
-  padding-right: 4px;
-}
-
-#custom-connectivity-toggle:hover {
-  background: transparent;
+#custom-cc:hover{
+  color: #9689d2;
+  background-color: #1e1e2e;
+  border: 1px solid #9689d2;
+  border-radius: 10px;
 }
 
 #tray {

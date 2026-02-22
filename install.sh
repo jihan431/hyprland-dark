@@ -68,7 +68,7 @@ log "Memeriksa dan menginstal paket yang dibutuhkan..."
 PACKAGES="hyprland waybar rofi-wayland eww-wayland kitty \
 dunst swww polkit-kde-agent nautilus blueman \
 hyprlock hypridle \
-grim slurp wl-clipboard pamixer brightnessctl \
+grim slurp wl-clipboard wf-recorder pamixer brightnessctl \
 catppuccin-gtk-theme-mocha tela-icon-theme deepin-cursor-theme-git nordic-theme"
 
 if command -v yay &> /dev/null; then

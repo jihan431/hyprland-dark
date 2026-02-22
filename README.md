@@ -28,7 +28,7 @@ A collection of configuration files (dotfiles) for my **Arch Linux** setup using
 | **WM** | [Hyprland](https://github.com/hyprwm/Hyprland) | Dynamic tiling wayland compositor |
 | **Bar** | [Waybar](https://github.com/Alexays/Waybar) | Vertical, icon-only bar |
 | **Lock** | [Hyprlock](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/) | Aesthetic lock screen (SF Compact font) |
-| **Widgets** | [Eww](https://github.com/elkowar/eww) | Custom clock widget on Workspace 1 |
+| **Widgets** | [Eww](https://github.com/elkowar/eww) | Clock & Premium Control Center |
 | **Terminal**| Kitty | GPU accelerated terminal |
 | **Launcher**| Rofi (Wayland) | Application launcher & menus |
 | **Shell** | Bash | With Starship prompt |
@@ -71,11 +71,24 @@ chmod +x install.sh
 
 ---
 
+## ✨ Features
+
+### 🎛️ Control Center
+A premium, glassmorphism-inspired control panel for system management:
+- **Connectivity**: Managed Wi-Fi (with inline password) and Bluetooth.
+- **System Controls**: Audio, Microphone, and Brightness sliders with mute/toggle support.
+- **Capture Hub**: 
+    - **Screen Recording**: Toggle with active status feedback (using `wf-recorder`).
+    - **Aesthetic Screenshots**: Select area, save to `~/Pictures/Screenshot` and copy to clipboard.
+
+---
+
 ## 📂 Structure
 
 ```text
 dotfiles/
-├── eww/                  # Custom Widget (Clock)
+├── eww/                  # Custom Widgets (Clock & Control Center)
+│   ├── scripts/          # Backend for WiFi, BT, Audio, and Capture
 ├── fonts/                # Custom font collection
 ├── hypr/                 # Hyprland & Hyprlock config
 ├── waybar/               # Waybar config & scripts
