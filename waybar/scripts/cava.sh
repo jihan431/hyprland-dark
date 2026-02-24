@@ -10,17 +10,13 @@ readonly MIN_LEVEL_WHEN_PLAYING="${CAVA_MIN_LEVEL_WHEN_PLAYING:-1}"
 readonly PLAYERCTL_POLL_EVERY="${CAVA_PLAYERCTL_POLL_EVERY:-12}"
 readonly LEVELS=" ▁▂▃▄▅▆▇█"
 
-if ! command -v cava >/dev/null 2>&1; then
-    exit 1
-fi
+command -v cava >/dev/null 2>&1 || exit 1
 
 playerctl_available=0
-if command -v playerctl >/dev/null 2>&1; then
-    playerctl_available=1
-fi
+command -v playerctl >/dev/null 2>&1 && playerctl_available=1
 
 config_file="$(mktemp /tmp/waybar_cava.XXXXXX)"
-trap 'rm -f "$config_file"' EXIT
+trap 'rm -f "$config_file"; pkill -P $$ cava 2>/dev/null' EXIT
 
 cat >"$config_file" <<EOF
 [general]
@@ -43,10 +39,16 @@ done
 frame_counter=0
 media_playing=0
 
-update_media_state() {
-    local statuses status
-
+is_playing() {
     if (( playerctl_available == 0 )); then
+        return 0
+    fi
+    playerctl --all-players status 2>/dev/null | grep -q Playing
+}
+
+update_media_state() {
+    if (( playerctl_available == 0 )); then
+        media_playing=1
         return
     fi
 
@@ -54,19 +56,11 @@ update_media_state() {
         return
     fi
 
-    # Evaluate all available players so mixed states (e.g. one paused, one playing)
-    # do not incorrectly mark the widget as idle.
-    if ! statuses="$(playerctl --all-players status 2>/dev/null)"; then
-        statuses="$(playerctl status 2>/dev/null || true)"
+    if is_playing; then
+        media_playing=1
+    else
+        media_playing=0
     fi
-
-    media_playing=0
-    while IFS= read -r status; do
-        if [[ "$status" == "Playing" ]]; then
-            media_playing=1
-            break
-        fi
-    done <<<"$statuses"
 }
 
 render_frame() {
@@ -79,63 +73,49 @@ render_frame() {
     for ((i = 0; i < BARS; i++)); do
         level="${values[i]:-0}"
 
-        if [[ ! "$level" =~ ^[0-9]+$ ]]; then
-            level=0
-        fi
+        [[ "$level" =~ ^[0-9]+$ ]] || level=0
+        (( level > MAX_LEVEL )) && level=$MAX_LEVEL
+        (( level <= NOISE_GATE )) && level=0
 
-        if (( level > MAX_LEVEL )); then
-            level=MAX_LEVEL
-        fi
-
-        # Cut tiny fluctuations so idle state looks clean.
-        if (( level <= NOISE_GATE )); then
-            level=0
-        fi
-
-        # Smooth the fall so bars don't drop too sharply.
         if (( level < previous_levels[i] )); then
             next_level=$((previous_levels[i] - FALL_STEP))
-            if (( next_level > level )); then
-                level=$next_level
-            fi
+            (( next_level > level )) && level=$next_level
         fi
 
-        if (( level < 0 )); then
-            level=0
-        fi
+        (( level < 0 )) && level=0
 
-        # Keep a faint baseline while media is playing so the widget never disappears.
         if (( media_playing == 1 )) && (( level == 0 )) && (( MIN_LEVEL_WHEN_PLAYING > 0 )); then
             level=$MIN_LEVEL_WHEN_PLAYING
         fi
 
         previous_levels[i]=$level
-
-        if (( level > 0 )); then
-            silent=0
-        fi
-
+        (( level > 0 )) && silent=0
         output+="${LEVELS:level:1}"
     done
 
-    if (( silent == 0 )); then
-        text="$output"
-    fi
-
-    if (( playerctl_available == 1 )); then
-        if (( media_playing == 1 )); then
-            class="active"
-        fi
-    elif (( silent == 0 )); then
-        class="active"
-    fi
+    (( silent == 0 )) && text="$output"
+    (( media_playing == 1 )) && class="active"
 
     printf '{"text":"%s","class":"%s"}\n' "$text" "$class"
 }
 
-cava -p "$config_file" | while IFS= read -r line; do
-    ((frame_counter++))
-    update_media_state
-    IFS=';' read -r -a values <<<"$line"
-    render_frame "${values[@]}"
+while true; do
+    if ! is_playing; then
+        printf '{"text":"","class":"idle"}\n'
+        sleep 2
+        continue
+    fi
+
+    cava -p "$config_file" | while IFS= read -r line; do
+        ((frame_counter++))
+        update_media_state
+
+        if ! is_playing; then
+            pkill -P $$ cava 2>/dev/null
+            break
+        fi
+
+        IFS=';' read -r -a values <<<"$line"
+        render_frame "${values[@]}"
+    done
 done

@@ -40,7 +40,6 @@ window {
     location:           west;
     anchor:             west;
     width:              500px;
-    height:             92%;
     border-radius:      24px;
     border-color:       @border;
     background-color:   @bg;
@@ -72,7 +71,7 @@ icon-search {
 }
 
 entry {
-    placeholder:        "Cari aplikasi atau file...";
+    placeholder:        "Cari aplikasi...";
     placeholder-color:  @fg-muted;
     text-color:         @fg;
     expand:             true;
@@ -82,9 +81,9 @@ entry {
 
 listview {
     columns:            4;
-    lines:              0;
+    lines:              6;
     cycle:              false;
-    dynamic:            false;
+    dynamic:            true;
     layout:             vertical;
     flow:               horizontal;
     fixed-height:       true;

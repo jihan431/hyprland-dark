@@ -475,7 +475,7 @@ calendar:indeterminate {
 
 #custom-cava {
   padding: 8px 0 10px 0;
-  margin: 12px;
+  margin: 13px;
   font-family: "JetBrainsMono Nerd Font";
   font-size: 13px;
   font-weight: 700;
@@ -492,6 +492,6 @@ calendar:indeterminate {
 
 #custom-cava.active {
   border-color: #ffffff;
-  border: 1px solid #ffffff;
+  border: 2px solid #a8a8a8;
   color: #ffffff;
 }
