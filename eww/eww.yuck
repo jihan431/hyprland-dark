@@ -247,7 +247,7 @@
       (label :class "cc-title" :text "Control Center"
              :hexpand true :halign "start")
       (button :class "cc-close-btn"
-              :onclick "eww --config $HOME/dotfiles/eww close control_center closer"
+              :onclick "eww --config $HOME/dotfiles/eww close control_center"
         (label :text "󰅖")))
     (box :class "cc-divider")
     (box :class "cc-section"
@@ -284,7 +284,7 @@
     (label :text hour :class "time-hour")
     (label :text min  :class "time-min")))
 
-(defwindow control_center
+  (defwindow control_center
   :monitor 0
   :stacking "overlay"
   :wm-ignore true
@@ -295,11 +295,3 @@
                       :height "0px"
                       :anchor "center left")
   (cc-main))
-
-(defwindow closer
-  :monitor 0
-  :geometry (geometry :width "100%" :height "100%")
-  :stacking "overlay"
-  :focusable false
-  (button :onclick "eww --config $HOME/dotfiles/eww close control_center closer"
-    (box :class "closer-inner")))

@@ -14,8 +14,7 @@ fi
 
 # Toggle: tutup jika terbuka, buka jika tertutup
 if "$EWW_BIN" --config "$CFG_DIR" active-windows 2>/dev/null | grep -q "$WINDOW_NAME"; then
-    "$EWW_BIN" --config "$CFG_DIR" close "$WINDOW_NAME" "closer"
+    "$EWW_BIN" --config "$CFG_DIR" close "$WINDOW_NAME"
 else
-    "$EWW_BIN" --config "$CFG_DIR" open "closer"
     "$EWW_BIN" --config "$CFG_DIR" open "$WINDOW_NAME"
 fi
