@@ -2,21 +2,6 @@
   {
     "position": "left",
     "exclusive": true,
-    "reload_style_on_change": true,
-    "mode": "dock",
-    "modules-center": [
-      "custom/battery-fill"
-    ],
-    "custom/battery-fill": {
-      "exec": "/home/lyon/.config/waybar/scripts/battery-fill.sh",
-      "return-type": "json",
-      "interval": 2,
-      "tooltip": true
-    }
-  },
-  {
-    "position": "left",
-    "exclusive": true,
     "mode": "dock",
     "passthrough": false,
     "reload_style_on_change": true,
@@ -33,10 +18,17 @@
     ],
     "modules-center": [],
     "modules-right": [
-      "custom/cc",
       "custom/cava",
+      "custom/battery-fill",
+      "custom/cc",
       "custom/power"
     ],
+    "custom/battery-fill": {
+      "exec": "~/.config/waybar/scripts/battery-fill.sh",
+      "return-type": "json",
+      "interval": 2,
+      "tooltip": true
+    },
     "clock": {
       "format": "{:%H\n%M}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
@@ -67,7 +59,7 @@
     },
     "custom/power": {
       "format": "󰍃",
-      "on-click": "/home/lyon/dotfiles/waybar/scripts/power-menu.sh",
+      "on-click": "~/.config/waybar/scripts/power-menu.sh",
       "tooltip": false
     },
     "tray": {
@@ -95,8 +87,8 @@
       "tooltip": false
     },
       "custom/cc": {
-      "format": "󰍜",
-      "on-click": "/home/lyon/.config/waybar/scripts/eww-control-center-toggle.sh",
+      "format": "󰣇",
+      "on-click": "~/.config/waybar/scripts/eww-control-center-toggle.sh",
       "tooltip": false
     }
   }

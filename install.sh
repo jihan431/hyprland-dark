@@ -66,10 +66,13 @@ log "Memeriksa dan menginstal paket yang dibutuhkan..."
 # Themes: Catppuccin, Tela Icons, Deepin Cursor, Nordic Cursor
 
 PACKAGES="hyprland waybar rofi-wayland eww-wayland kitty \
-dunst swww polkit-kde-agent nautilus blueman \
-hyprlock hypridle \
+dunst swww polkit-kde-agent nemo nemo-fileroller \
+hyprlock hypridle file-roller jq qt6ct wireplumber \
+xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
 grim slurp wl-clipboard wf-recorder pamixer brightnessctl \
-catppuccin-gtk-theme-mocha tela-icon-theme deepin-cursor-theme-git nordic-theme"
+inverse-icon-theme-git bibata-cursor-theme \
+visual-studio-code-bin google-chrome spotify scrcpy \
+bluez-utils networkmanager fastfetch gvfs"
 
 if command -v yay &> /dev/null; then
     yay -S --needed $PACKAGES
@@ -127,7 +130,8 @@ link_config "waybar"
 link_config "rofi"
 link_config "gtk-3.0"
 link_config "gtk-4.0"
-link_config "kitty"  # Kitty terminal config
+link_config "kitty"
+link_config "dunst"
 
 # --- 4. LINK FILE (Untuk .bashrc dll) ---
 link_file() {
@@ -187,6 +191,44 @@ else
     warn "Folder fonts tidak ditemukan di dotfiles. Lewati setup font."
 fi
 
+# --- 6. APPLY THEMES (ALL DONE) ---
+echo ""
+log "Menerapkan tema MonoTheme secara otomatis..."
+
+# Install Theme variants if not exists
+if [ ! -d "$HOME/.themes/MonoThemeDark" ]; then
+    log "Cloning Mono-gtk-theme from GitHub..."
+    git clone https://github.com/witalihirsch/Mono-gtk-theme.git /tmp/Mono-gtk-theme
+    mkdir -p "$HOME/.themes"
+    cp -r /tmp/Mono-gtk-theme/Mono* "$HOME/.themes/"
+    rm -rf /tmp/Mono-gtk-theme
+fi
+
+if command -v gsettings &> /dev/null; then
+    gsettings set org.gnome.desktop.interface gtk-theme 'MonoThemeDark'
+    gsettings set org.gnome.desktop.interface icon-theme 'Reversal-black-dark'
+    gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'
+    
+    # Nemo specific settings for better aesthetics
+    if command -v nemo &> /dev/null; then
+        gsettings set org.nemo.desktop show-desktop-icons false 2>/dev/null
+        gsettings set org.nemo.window-state sidebar-width 200 2>/dev/null
+    fi
+    
+    success "Tema, Ikon, dan Kursor telah diterapkan!"
+else
+    warn "gsettings tidak ditemukan. Silakan atur tema secara manual."
+fi
+
+# Refresh desktop portal
+log "Refreshing desktop portal..."
+systemctl --user restart xdg-desktop-portal-gtk.service 2>/dev/null || pkill xdg-desktop-portal-gtk
+
+# Refresh xdg-desktop-portal-gtk to apply changes to file picker
+log "Refreshing desktop portal..."
+systemctl --user restart xdg-desktop-portal-gtk.service 2>/dev/null || pkill xdg-desktop-portal-gtk
+
 echo ""
 echo -e "${GREEN}=== Instalasi Selesai! ===${NC}"
 echo "Silakan restart terminal atau source ~/.bashrc untuk melihat perubahan."
+echo "Nikmati setup Monochrome kamu! 🏁"

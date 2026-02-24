@@ -1,0 +1,20 @@
+# Backups
+*.bak
+*.bak_*
+*~
+
+# Logs & Temporary Files
+*.log
+/tmp/
+.cache/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Large Binary Files (if not intended)
+# *.png
+# *.jpg
+
+# Git specific
+.git/

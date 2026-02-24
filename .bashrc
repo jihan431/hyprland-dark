@@ -32,8 +32,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # --- MINIMALIST PS1 PROMPT ---
 C_CYAN='\[\e[1;36m\]'
+C_WHITE='\[\e[1;37m\]'
 C_RESET='\[\e[0m\]'
-PS1="${C_CYAN} \u ${C_RESET}${C_CYAN}\w ${C_CYAN}❯${C_RESET} "
+PS1="${C_WHITE} \u ${C_RESET}${C_CYAN}\w ${C_CYAN}❯${C_RESET} "
 
 # --- ASCII Art & Fastfetch ---
 if command -v fastfetch &> /dev/null; then
@@ -41,7 +42,7 @@ if command -v fastfetch &> /dev/null; then
         # Use simple --logo argument. 
         # --file-raw might be needed depending on version, but --logo is standard.
         # We assume the ascii file doesn't have escape codes for colors, so it picks up terminal color.
-        fastfetch --logo "$HOME/dotfiles/ascii.txt" --logo-type file 
+        fastfetch
     else
         fastfetch
     fi

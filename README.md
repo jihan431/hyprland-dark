@@ -1,14 +1,14 @@
-# 🍙 My Dotfiles
+# 🏁 Monochrome Dots
 
-![My Setup](waybar/image5.png)
+> A premium, minimalist, and high-contrast monochrome desktop environment.
 
-> A minimalist, aesthetic, and functional desktop environment.
-
-A collection of configuration files (dotfiles) for my **Arch Linux** setup using **Hyprland**, **Waybar**, and **Eww**, consistent with the **Catppuccin Mocha** color scheme.
+This repository contains my personal configuration files (dotfiles) for **Arch Linux**. The setup is built around **Hyprland**, **Waybar**, and **Eww**, carefully curated to achieve a sophisticated **Monochrome (Black & White)** aesthetic with glassmorphism touches.
 
 ---
 
 ## 🖼️ Gallery
+
+![Desktop Overview](waybar/image5.png)
 
 <div align="center">
   <img src="waybar/image.png" width="45%" alt="Desktop Overview" />
@@ -20,81 +20,78 @@ A collection of configuration files (dotfiles) for my **Arch Linux** setup using
 
 ---
 
-## 🛠️ Details
+## 🛠️ System Components
 
-| Component | Choice | Description |
-|-----------|--------|-------------|
-| **OS** | Arch Linux | Bleeding edge |
-| **WM** | [Hyprland](https://github.com/hyprwm/Hyprland) | Dynamic tiling wayland compositor |
-| **Bar** | [Waybar](https://github.com/Alexays/Waybar) | Vertical, icon-only bar |
-| **Lock** | [Hyprlock](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/) | Aesthetic lock screen (SF Compact font) |
-| **Widgets** | [Eww](https://github.com/elkowar/eww) | Clock & Premium Control Center |
-| **Terminal**| Kitty | GPU accelerated terminal |
-| **Launcher**| Rofi (Wayland) | Application launcher & menus |
-| **Shell** | Bash | With Starship prompt |
-| **Theme** | Catppuccin Mocha | Mauve accent |
-| **Font** | SF Compact Display | Primary UI font |
+| Component | Selection | Description |
+|-----------|-----------|-------------|
+| **OS** | Arch Linux | The foundation |
+| **WM** | [Hyprland](https://github.com/hyprwm/Hyprland) | Wayland compositor |
+| **Status Bar**| [Waybar](https://github.com/Alexays/Waybar) | Minimal vertical bar |
+| **Widgets** | [Eww](https://github.com/elkowar/eww) | Glassmorphism Control Center |
+| **Lockscreen**| [Hyprlock](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/) | Minimalist protection |
+| **Terminal** | Kitty | GPU-accelerated B&W terminal |
+| **Launcher** | Rofi | Custom monochrome menus |
+| **Shell** | Bash | Clean monochrome prompt |
+| **Theme** | **Monochrome** | High-contrast Black & White |
+| **Font** | SF Compact Display | Clean, modern typography |
 
 ---
 
-## 🚀 Installation
+## ✨ Key Features
 
-### 1. Clone the repository
+### 🎛️ Control Center
+A sophisticated glassmorphism-inspired panel for seamless system control:
+- **Connectivity**: Integrated Wi-Fi management and Bluetooth controls.
+- **Audio Hub**: Precision sliders for Volume and Microphone with status indicators.
+- **Capture**: Quick-access Screen Recording and Clipboard-integrated Screenshots.
+
+### 🌑 Aesthetics
+- **Borderless Design**: Maximizing screen real estate and focus.
+- **Monochrome Palette**: Consistent black, white, and grey tones across all UI elements.
+- **Micro-animations**: Subtle transitions for a premium interactive feel.
+
+---
+
+## 🚀 Setup
+
+### 1. Clone
 ```bash
 git clone https://github.com/jihan431/dotfiles.git
 cd dotfiles
 ```
 
-### 2. Run the installer
-The `install.sh` script handles symlinking and dependency installation.
+### 2. Install
+The included `install.sh` handles the heavy lifting of symlinking and configuration.
 
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 
-> **Note**: The script backs up existing configurations to `.bak` files.
-
 ---
 
-## ⌨️ Keybindings
+## ⌨️ Quick Bindings
 
-| Keybind | Action |
-|---------|--------|
+| Combination | Action |
+|-------------|--------|
 | `SUPER + Q` | Close Window |
-| `SUPER + RETURN` | Open Terminal |
-| `SUPER + SPACE` | Open App Launcher |
-| `SUPER + E` | Open File Manager |
-| `SUPER + L` | **Open Power Menu** |
+| `SUPER + RET` | Terminal |
+| `SUPER + SPC` | Launcher |
+| `SUPER + E` | File Manager |
+| `SUPER + L` | Power Menu |
 | `SUPER + V` | Toggle Floating |
-| `SUPER + F` | Fullscreen |
 
 ---
 
-## ✨ Features
-
-### 🎛️ Control Center
-A premium, glassmorphism-inspired control panel for system management:
-- **Connectivity**: Managed Wi-Fi (with inline password) and Bluetooth.
-- **System Controls**: Audio, Microphone, and Brightness sliders with mute/toggle support.
-- **Capture Hub**: 
-    - **Screen Recording**: Toggle with active status feedback (using `wf-recorder`).
-    - **Aesthetic Screenshots**: Select area, save to `~/Pictures/Screenshot` and copy to clipboard.
-
----
-
-## 📂 Structure
+## 📂 Repository Layout
 
 ```text
 dotfiles/
-├── eww/                  # Custom Widgets (Clock & Control Center)
-│   ├── scripts/          # Backend for WiFi, BT, Audio, and Capture
-├── fonts/                # Custom font collection
-├── hypr/                 # Hyprland & Hyprlock config
-├── waybar/               # Waybar config & scripts
-├── rofi/                 # App Launcher theme
-├── gtk-3.0/              # Gtk styling
-├── gtk-4.0/              # Gtk styling
-├── install.sh            # Setup script
-└── README.md             # Documentation
+├── eww/                  # Widgets & Control Center
+├── fonts/                # UI Typography
+├── hypr/                 # Compositor & Lockscreen
+├── waybar/               # Custom Status Bar
+├── rofi/                 # Application Launcher
+├── gtk-3.0/              # System-wide B&W styling
+└── install.sh            # Setup automation
 ```

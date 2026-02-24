@@ -1,1 +1,31 @@
-@import 'colors.css';
+/* MONOCHROME OVERRIDES FOR GTK 3.0 */
+@define-color accent_bg_color #dbdbdb;
+@define-color accent_fg_color rgba(17, 17, 27, 0.87);
+@define-color accent_color #dbdbdb;
+@define-color blue_1 #e0e0e0;
+@define-color blue_2 #bdbdbd;
+@define-color blue_3 #9e9e9e;
+@define-color blue_4 #757575;
+@define-color blue_5 #616161;
+
+/* Ultimate Greyscale Enforcement */
+* {
+    -gtk-secondary-caret-color: #dbdbdb !important;
+    outline-color: rgba(219, 219, 219, 0.3) !important;
+}
+
+.suggested-action,
+button.suggested-action,
+.file-chooser .button.suggested-action,
+.file-chooser button.suggested-action {
+    background-color: #dbdbdb !important;
+    color: rgba(17, 17, 27, 0.87) !important;
+    background-image: none !important;
+    border-color: #bdbdbd !important;
+}
+
+/* Fix sidebar folder icons and highlights */
+.sidebar row:selected {
+    background-color: #dbdbdb !important;
+    color: #11111b !important;
+}

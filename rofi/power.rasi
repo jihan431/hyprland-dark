@@ -1,10 +1,9 @@
-
 * {
-    background-utama:    #1e1e2ed0;
-    background-aksen:    #9689d219;
-    teks-utama:          #d9e0ee;
-    teks-dipilih:        #ffffffff;
-    border-warna:        #9689D2;
+    background-utama:    #0a0a0a99;
+    background-aksen:    rgba(255, 255, 255, 0.1);
+    teks-utama:          #f0f0f0;
+    teks-dipilih:        #ffffff;
+    border-warna:        rgba(255, 255, 255, 0.1);
 
     font: "SF Compact Display Medium 90";
     
@@ -22,14 +21,15 @@ configuration {
     fullscreen: false;
 }
 
-
-
 window {
     location:         center;
     anchor:           center;
     x-offset:         0;
     y-offset:         0;   
     background-color: @background-utama;
+    border:           1px;
+    border-radius:    24px;
+    border-color:     @border-warna;
     children:         [ mainbox ];
 }
 
@@ -49,7 +49,7 @@ listview {
 
 element {
     background-color: transparent;
-    text-color:       @teks-utama;
+    text-color:       #ffffff55;
     orientation:      vertical;
     border-radius:    24px;
     cursor:           pointer;
@@ -66,7 +66,5 @@ element-text {
 
 element selected {
     background-color: transparent;
-    text-color:       @border-warna;
-    border:           0px;
-    border-color:     #5b5088ff;
+    text-color:       #ffffff;
 }

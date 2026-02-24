@@ -1,12 +1,12 @@
 * {
-    bg:                 #191e2d;
-    bg-soft:            #23283a;
-    bg-card:            #2a30451a;
-    bg-selected:        #9689d226;
-    fg:                 #f2eeff;
-    fg-muted:           #b6adf0;
-    accent:             #b6adf0;
-    border:             #9689d2;
+    bg:                 #1d1d1dff;
+    bg-soft:            rgba(255, 255, 255, 0.05);
+    bg-card:            rgba(255, 255, 255, 0.03);
+    bg-selected:        rgba(255, 255, 255, 0.1);
+    fg:                 #f0f0f0;
+    fg-muted:           #a8a8a8;
+    accent:             #dbdbdb;
+    border:             rgba(255, 255, 255, 0.1);
     background-utama:   @bg;
     background-aksen:   @bg-selected;
     teks-utama:         @fg;
@@ -41,9 +41,8 @@ window {
     anchor:             west;
     width:              500px;
     height:             92%;
-    border:             1px;
-    border-radius:      20px;
-    border-color:       #9689d250;
+    border-radius:      24px;
+    border-color:       @border;
     background-color:   @bg;
     children:           [ mainbox ];
     x-offset:           15px;
@@ -54,7 +53,7 @@ mainbox {
     background-color:   transparent;
     children:           [ inputbar, mode-switcher, listview ];
     spacing:            12px;
-    padding:            12px;
+    padding:            16px;
 }
 
 inputbar {
@@ -101,6 +100,7 @@ element {
     background-color:   @bg-card;
     padding:            10px 6px;
     spacing:            4px;
+    text-color:         #ffffff55;
 }
 
 element-icon {
@@ -120,8 +120,7 @@ element-text {
 }
 
 element selected {
-    background-color:   #9689d233;
-    text-color:         @fg;
+    text-color:         #ffffff;
 }
 
 mode-switcher {
@@ -132,13 +131,14 @@ mode-switcher {
 }
 
 button {
-    background-color:   @bg-soft;
-    text-color:         @fg-muted;
+    background-color:   transparent;
+    text-color:         #ffffff55;
     border-radius:      12px;
     padding:            10px 12px;
 }
 
 button selected {
-    background-color:   #9689d233;
-    text-color:         @fg;
+    background-color:   #ffffff15;
+    text-color:         #ffffff;
+    font:              "SF Compact Display Bold 12";
 }

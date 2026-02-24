@@ -5,12 +5,11 @@
   font-size: 20px;
   min-height: 0;
   min-width: 0;
-  transition: all 0.8s ease;
 }
 
 window#waybar {
-  background: rgba(25, 30, 45, 1);
-  color: #9689d2;
+  background: rgba(35, 35, 35, 1);
+  color: #ffffff;
   border-radius: 0px;
   padding: 0;
   margin: 0;
@@ -33,20 +32,22 @@ window#waybar {
   padding-right: 6px;
 }
 #custom-cc {
-  background-color: #9689d2;
-  transition: all 0.8s ease;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
   padding-right: 4px;
   border-radius: 10px;
+  border: 1px solid transparent;
   margin-top: 10px;
   min-width: 0px;
+  min-height: 30px;
   padding: 5 3 5 0px;
   margin: 13px;
-  color: #1e1e2e;
+  color: #000000;
 }
 #custom-cc:hover{
-  color: #9689d2;
-  background-color: #1e1e2e;
-  border: 1px solid #9689d2;
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid #ffffff;
   border-radius: 10px;
 }
 
@@ -55,7 +56,7 @@ window#waybar {
   font-size: 15px;
 }
 
-/* === SEMUA MODUL - ICON ONLY VERTICAL === */
+/* === ALL MODULES - ICON ONLY VERTICAL === */
 #custom-launcher,
 #clock {
   padding-top: 10px;
@@ -63,7 +64,7 @@ window#waybar {
   margin: 2px 0;
   border-radius: 0;
   background: transparent;
-  color: #9689d2;
+  color: #ffffff;
   font-size: 17px;
 }
 
@@ -81,7 +82,7 @@ window#waybar {
   margin: 2px 0;
   border-radius: 0;
   background: transparent;
-  color: #000000;
+  color: #ffffff;
   font-size: 17px;
 }
 
@@ -103,7 +104,7 @@ window#waybar {
   margin: 2px 0;
   border-radius: 0;
   background: transparent;
-  color: #9689d2;
+  color: #ffffff;
   font-size: 20px;
   font-weight: 700;
 }
@@ -112,7 +113,7 @@ window#waybar {
 #tray:hover,
 #clock:hover,
 #custom-power:hover {
-  color: #9689d2;
+  color: #ffffff;
   border-radius: 0;
 }
 
@@ -124,7 +125,7 @@ window#waybar {
 #workspaces button {
   padding: 8px 0;
   margin: 5px 0;
-  color: #4e4e7a;
+  color: rgba(255, 255, 255, 0.3);
   border-radius: 0;
   background: transparent;
   font-size: 20px;
@@ -137,46 +138,51 @@ window#waybar {
   background: transparent;
   box-shadow: none;
   text-shadow: none;
-  color: #9689d2;
+  color: #ffffff;
   border-color: transparent;
 }
 #workspaces button.active {
   font-weight: 700;
   border-radius: 0;
-  color: #9689d2;
+  color: #ffffff;
 }
 
 #workspaces button.urgent {
-  color: #1e1e2e;
-  background: #f38ba8;
+  color: #000000;
+  background: #ffffff;
 }
 
 /* === LAUNCHER === */
 #custom-launcher {
   font-size: 30px;
-  color: #9689d2;
+  color: #cccccc;
   padding-right: 10px;
+  padding-top: 10px;
+}
+
+#custom-launcher:hover {
+  color: #ffffff;
 }
 
 /* === CLOCK === */
 #clock {
-  color: #9689d2;
+  color: #ffffff;
   font-weight: 700;
 }
 
 /* === NETWORK STATE === */
 #network.disconnected {
-  color: #4e4e7a;
+  color: #888888;
 }
 
 /* === BLUETOOTH STATE === */
 #bluetooth.connected {
-  color: #9689d2;
+  color: #ffffff;
 }
 
 /* === AUDIO STATE === */
 #pulseaudio.muted {
-  color: #4e4e7a;
+  color: #666666;
 }
 #pulseaudio {
   padding-right: 0px;
@@ -188,94 +194,133 @@ window#waybar {
 
 /* === POWER BUTTON === */
 #custom-power {
-  color: #9689d2;
+  color: #ffffff;
   margin: 10px;
   font-size: 25px;
+  border-radius: 500px;
+  padding-bottom: 10px;
 }
 
 #custom-power:hover {
   border-radius: 50px;
   margin: 10px 18px;
-  color: #d53f49;
+  color: red;
 }
 
 /* === TOOLTIP === */
 tooltip {
-  border-radius: 0px;
-  background-color: transparent;
+  background: rgba(30, 30, 30, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  min-width: 320px;
+  font-family: "SF Compact";
 }
 
 tooltip label {
-  color: #9689d2;
-  padding: 8px 12px;
-  font-size: 14px;
-  background: transparent;
+  color: #f0f0f0;
+  font-size: 20px;
+  padding: 8px;
 }
 
-/* --- Discharging fill levels (purple: bottom-to-top) --- */
+/* === CALENDAR (Inside Clock Tooltip) === */
+calendar {
+  background: transparent;
+  color: #f0f0f0;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-family: "SF Compact";
+}
+
+calendar:selected {
+  background-color: #dbdbdb;
+  color: #1a1a1a;
+  border-radius: 4px;
+}
+
+calendar > header {
+  padding: 5px;
+  color: #dbdbdb;
+}
+
+calendar > .header {
+  color: #dbdbdb;
+}
+
+calendar > .button {
+  color: #f0f0f0;
+}
+
+calendar:indeterminate {
+  color: #666666;
+}
+
+/* --- Discharging fill levels (monochrome) --- */
 #custom-battery-fill.level-0 {
-  background: #c8c8ff;
+  background: #222222;
 }
 #custom-battery-fill.level-5 {
-  background: linear-gradient(to top, #de1818 5%, #c8c8ff 5%);
+  background: linear-gradient(to top, #ff0000 5%, #a8a8a8 5%);
 }
 #custom-battery-fill.level-10 {
-  background: linear-gradient(to top, #de1818 10%, #c8c8ff 10%);
+  background: linear-gradient(to top, #ff0000 10%, #a8a8a8 10%);
 }
 #custom-battery-fill.level-15 {
-  background: linear-gradient(to top, #de1818 15%, #c8c8ff 15%);
+  background: linear-gradient(to top, #ff0000 15%, #a8a8a8 15%);
 }
 #custom-battery-fill.level-20 {
-  background: linear-gradient(to top, #de1818 20%, #c8c8ff 20%);
+  background: linear-gradient(to top, #ff0000 20%, #a8a8a8 20%);
 }
 #custom-battery-fill.level-25 {
-  background: linear-gradient(to top, #ffae00 25%, #c8c8ff 25%);
+  background: linear-gradient(to top, #a7af09 25%, #a8a8a8 25%);
 }
 #custom-battery-fill.level-30 {
-  background: linear-gradient(to top, #ffae00 30%, #c8c8ff 30%);
+  background: linear-gradient(to top, #666666 30%, #a8a8a8 30%);
 }
 #custom-battery-fill.level-35 {
-  background: linear-gradient(to top, #ffae00 35%, #c8c8ff 35%);
+  background: linear-gradient(to top, #666666 35%, #a8a8a8 35%);
 }
 #custom-battery-fill.level-40 {
-  background: linear-gradient(to top, #ffae00 40%, #c8c8ff 40%);
+  background: linear-gradient(to top, #666666 40%, #a8a8a8 40%);
 }
 #custom-battery-fill.level-45 {
-  background: linear-gradient(to top, #4e4e7a 45%, #c8c8ff 45%);
+  background: linear-gradient(to top, #777777 45%, #a8a8a8 45%);
 }
 #custom-battery-fill.level-50 {
-  background: linear-gradient(to top, #4e4e7a 50%, #c8c8ff 50%);
+  background: linear-gradient(to top, #777777 50%, #a8a8a8 50%);
 }
 #custom-battery-fill.level-55 {
-  background: linear-gradient(to top, #4e4e7a 55%, #c8c8ff 55%);
+  background: linear-gradient(to top, #777777 55%, #a8a8a8 55%);
 }
 #custom-battery-fill.level-60 {
-  background: linear-gradient(to top, #4e4e7a 60%, #c8c8ff 60%);
+  background: linear-gradient(to top, #888888 60%, #a8a8a8 60%);
 }
 #custom-battery-fill.level-65 {
-  background: linear-gradient(to top, #4e4e7a 65%, #c8c8ff 65%);
+  background: linear-gradient(to top, #888888 65%, #a8a8a8 65%);
 }
 #custom-battery-fill.level-70 {
-  background: linear-gradient(to top, #4e4e7a 70%, #c8c8ff 70%);
+  background: linear-gradient(to top, #888888 70%, #a8a8a8 70%);
 }
 #custom-battery-fill.level-75 {
-  background: linear-gradient(to top, #4e4e7a 75%, #c8c8ff 75%);
+  background: linear-gradient(to top, #888888 75%, #a8a8a8 75%);
 }
 #custom-battery-fill.level-80 {
-  background: linear-gradient(to top, #4e4e7a 80%, #c8c8ff 80%);
+  background: linear-gradient(to top, #888888 80%, #a8a8a8 80%);
 }
 #custom-battery-fill.level-85 {
-  background: linear-gradient(to top, #4e4e7a 85%, #c8c8ff 85%);
+  background: linear-gradient(to top, #888888 85%, #a8a8a8 85%);
 }
 #custom-battery-fill.level-90 {
-  background: linear-gradient(to top, #4e4e7a 90%, #c8c8ff 90%);
+  background: linear-gradient(to top, #eeeeee 90%, #a8a8a8 90%);
 }
 #custom-battery-fill.level-95 {
-  background: linear-gradient(to top, #4e4e7a 95%, #c8c8ff 95%);
+  background: linear-gradient(to top, #eeeeee 95%, #a8a8a8 95%);
 }
 
 #custom-battery-fill.level-100 {
-  background: #4e4e7a;
+  background: #ffffff;
 }
 
 #custom-battery-fill.level-0,
@@ -299,10 +344,13 @@ tooltip label {
 #custom-battery-fill.level-90,
 #custom-battery-fill.level-95,
 #custom-battery-fill.level-100 {
-  font-size: 20px;
+  font-size: 40px;
   color: #000000;
-  min-height: 900px;
-  margin-left: 5px;
+  min-height: 150px;
+  margin-top: 5px;
+  margin: 13px;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
 }
 
 #custom-battery-fill.level-0-charging,
@@ -326,101 +374,103 @@ tooltip label {
 #custom-battery-fill.level-90-charging,
 #custom-battery-fill.level-95-charging,
 #custom-battery-fill.level-100-charging {
-  font-size: 20px;
-  color: #000000;
-  min-height: 880px;
-  margin: 2px;
-  border-radius: 0 10 10 0px;
+  font-size: 25px;
+  color: #222222;
+  min-height: 70px;
+  border-radius: 10px;
+  margin: 13px;
+  border: 2px solid #ffffff;
 }
 
 #custom-battery-fill.level-0-charging {
-  background: #c8c8ff;
+  background: #222222;
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-5-charging {
-  background: linear-gradient(to top, #33e024 5%, #c8c8ff 5%);
+  background: linear-gradient(to top, #ffffff 5%, #444444 5%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-10-charging {
-  background: linear-gradient(to top, #33e024 10%, #c8c8ff 10%);
+  background: linear-gradient(to top, #ffffff 10%, #444444 10%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-15-charging {
-  background: linear-gradient(to top, #33e024 15%, #c8c8ff 15%);
+  background: linear-gradient(to top, #ffffff 15%, #444444 15%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-20-charging {
-  background: linear-gradient(to top, #33e024 20%, #c8c8ff 20%);
+  background: linear-gradient(to top, #ffffff 20%, #444444 20%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-25-charging {
-  background: linear-gradient(to top, #33e024 25%, #c8c8ff 25%);
+  background: linear-gradient(to top, #ffffff 25%, #444444 25%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-30-charging {
-  background: linear-gradient(to top, #33e024 30%, #c8c8ff 30%);
+  background: linear-gradient(to top, #ffffff 30%, #444444 30%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-35-charging {
-  background: linear-gradient(to top, #33e024 35%, #c8c8ff 35%);
+  background: linear-gradient(to top, #ffffff 35%, #444444 35%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-40-charging {
-  background: linear-gradient(to top, #33e024 40%, #c8c8ff 40%);
+  background: linear-gradient(to top, #ffffff 40%, #444444 40%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-45-charging {
-  background: linear-gradient(to top, #33e024 45%, #c8c8ff 45%);
+  background: linear-gradient(to top, #ffffff 45%, #444444 45%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-50-charging {
-  background: linear-gradient(to top, #33e024 50%, #c8c8ff 50%);
+  background: linear-gradient(to top, #ffffff 50%, #444444 50%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-55-charging {
-  background: linear-gradient(to top, #33e024 55%, #c8c8ff 55%);
+  background: linear-gradient(to top, #ffffff 55%, #444444 55%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-60-charging {
-  background: linear-gradient(to top, #33e024 60%, #c8c8ff 60%);
+  background: linear-gradient(to top, #ffffff 60%, #444444 60%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-65-charging {
-  background: linear-gradient(to top, #33e024 65%, #c8c8ff 65%);
+  background: linear-gradient(to top, #ffffff 65%, #444444 65%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-70-charging {
-  background: linear-gradient(to top, #33e024 70%, #c8c8ff 70%);
+  background: linear-gradient(to top, #ffffff 70%, #444444 70%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-75-charging {
-  background: linear-gradient(to top, #33e024 75%, #c8c8ff 75%);
+  background: linear-gradient(to top, #ffffff 75%, #444444 75%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-80-charging {
-  background: linear-gradient(to top, #33e024 80%, #c8c8ff 80%);
+  background: linear-gradient(to top, #ffffff 80%, #444444 80%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-85-charging {
-  background: linear-gradient(to top, #33e024 85%, #c8c8ff 85%);
+  background: linear-gradient(to top, #ffffff 85%, #444444 85%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-90-charging {
-  background: linear-gradient(to top, #33e024 90%, #c8c8ff 90%);
+  background: linear-gradient(to top, #ffffff 90%, #444444 90%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-95-charging {
-  background: linear-gradient(to top, #33e024 95%, #c8c8ff 95%);
+  background: linear-gradient(to top, #ffffff 95%, #444444 95%);
   animation: charging-pulse 2s ease-in-out infinite;
 }
 #custom-battery-fill.level-100-charging {
-  background: #33e024;
+  background: #ffffff;
   animation: charging-pulse 2s ease-in-out infinite;
 }
 
 #custom-battery-fill {
-  color: #1e1e2e;
-  background: #c8c8ff;
+  color: #000000;
+  background: #ffffff;
+  transition: all 1s ease;
 }
 
 #custom-cava {
@@ -431,18 +481,17 @@ tooltip label {
   font-weight: 700;
   letter-spacing: 1px;
   transition: 0.5s ease;
-  color: #b6adf0;
+  color: #ffffff;
   min-width: 0;
-  border: 2px solid rgba(150, 137, 210, 0.45);
   border-radius: 10px;
-  box-shadow: inset 0 0 0 1px rgba(182, 173, 240, 0.15);
 }
 #custom-cava.idle {
-  border-color: rgba(150, 137, 210, 0.45);
-  color: rgba(182, 173, 240, 0.65);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 #custom-cava.active {
-  border-color: #9689d2;
-  color: #b6adf0;
+  border-color: #ffffff;
+  border: 1px solid #ffffff;
+  color: #ffffff;
 }

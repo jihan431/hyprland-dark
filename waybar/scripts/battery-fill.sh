@@ -16,10 +16,10 @@ get_battery_info() {
 
     # Determine charging state and build class name
     local class="level-${level}"
-    local icon=" "
+    local icon="󰁳"
     if [ "$status" = "Charging" ] || [ "$status" = "Full" ]; then
         class="level-${level}-charging"
-        icon=" "
+        icon="󱐋"
     fi
 
     # Add state suffix

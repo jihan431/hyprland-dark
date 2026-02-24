@@ -1,30 +1,22 @@
-// =============================================
-// PALETTE — matched to waybar
-// =============================================
-$bg:       rgba(25, 30, 45, 0.97);   // same as waybar sidebar
-$surface:  rgba(35, 40, 58, 0.95);
-$surface2: rgba(48, 54, 76, 0.90);
-$surface3: rgba(62, 68, 92, 0.85);
-$accent:   #9689d2;                  // waybar accent (lavandar)
-$accent2:  rgba(150, 137, 210, 0.18);
-$green:    #a6e3a1;
-$red:      #f38ba8;
-$yellow:   #f9e2af;
-$text:     #c8c8ff;                  // waybar text highlight
-$subtext:  #a6adc8;
-$muted:    #45475a;
-$border:   rgba(255, 255, 255, 0.06);
+$bg:       rgb(35, 35, 35);
+$surface:  rgba(255, 255, 255, 0.05);
+$surface2: rgba(255, 255, 255, 0.08);
+$surface3: rgba(255, 255, 255, 0.12);
+$accent:   #dbdbdb;
+$accent2:  rgba(255, 255, 255, 0.1);
+$green:    #81c784;
+$red:      #e57373;
+$yellow:   #fff176;
+$text:     #f0f0f0;
+$subtext:  #a8a8a8;
+$muted:    #666666;
+$border:   rgba(255, 255, 255, 0.1);
 
-// =============================================
-// GLOBAL
-// =============================================
 window {
   background-color: transparent;
+  text-shadow: none;
 }
 
-// =============================================
-// CLOCK WINDOW
-// =============================================
 .clock-box {
   background-color: transparent;
   padding: 90px 120px;
@@ -36,23 +28,18 @@ window {
   font-family: "SF Compact Display", "Noto Sans", sans-serif;
   font-size: 170pt;
   font-weight: 900;
-  color: rgba(30, 30, 46, 0.85);
+  color: rgba(255, 255, 255, 0.23);
 }
 
 .time-hour { margin-bottom: 0px; }
 .time-min  { margin-top: -50px; }
 
-// =============================================
-// CONTROL CENTER BOX
-// =============================================
 .cc-box {
   background-color: $bg;
-  border-radius: 20px;
-  padding: 20px 22px 22px;
-  border: 1px solid #9689d2;
+  border-radius: 24px;
+  padding: 22px 24px;
 }
 
-// --- Header ---
 .cc-header {
   margin-bottom: 12px;
   padding-bottom: 4px;
@@ -74,7 +61,7 @@ window {
 }
 
 .cc-close-btn {
-  background-color: transparent;
+  background: none;
   border: none;
   border-radius: 10px;
   padding: 4px 10px;
@@ -82,54 +69,45 @@ window {
   font-size: 14pt;
   min-width: 36px;
   min-height: 36px;
+  box-shadow: none;
 }
 
 .cc-close-btn:hover {
-  color: $red;
+  color: $text;
 }
 
-// --- Divider ---
 .cc-divider {
   background-color: transparent;
   min-height: 1px;
   margin: 6px 0px 10px;
 }
 
-// --- Expand chevron ---
 .list-btn {
-  background-color: transparent;
+  background: none;
   border: none;
   border-radius: 99px;
-  padding: 2px 2px;
+  padding: 2px;
   color: $subtext;
   font-size: 14pt;
   margin-left: 4px;
   min-width: 33px;
   min-height: 28px;
+  box-shadow: none;
 }
 
-.list-btn:hover {
-  color: $accent;
-}
-
+.list-btn:hover,
 .list-btn.open {
-  color: $accent;
+  color: $text;
 }
 
-// =============================================
-// SECTIONS
-// =============================================
 .cc-section {
   margin-bottom: 0px;
 }
 
-// =============================================
-// LIST PANELS (WiFi / BT)
-// =============================================
 .list-panel {
   background-color: $surface;
   border-radius: 0px 0px 12px 12px;
-  padding: 4px 4px;
+  padding: 4px;
   margin-bottom: 6px;
 }
 
@@ -147,13 +125,12 @@ window {
   min-width: 100px;
 }
 
-// --- Network / BT item ---
 .net-item {
   background-color: transparent;
   background-image: none;
   border-radius: 8px;
   padding: 8px 12px;
-  margin: 2px 2px;
+  margin: 2px;
   box-shadow: none;
 }
 
@@ -176,12 +153,10 @@ window {
   min-width: 28px;
 }
 
-.net-icon.active {
-  color: $accent;
-}
-
-.net-item.connected .net-icon {
-  color: $accent;
+.net-icon.active,
+.net-item.connected .net-icon,
+.net-item.connected .net-name {
+  color: $text;
 }
 
 .net-name {
@@ -192,7 +167,6 @@ window {
 }
 
 .net-item.connected .net-name {
-  color: $accent;
   font-weight: 700;
 }
 
@@ -205,14 +179,15 @@ window {
   min-width: 44px;
 }
 
-// --- Compact WiFi action buttons ---
 .net-action-btn {
   border: none;
   padding: 0px 6px;
   font-size: 20pt;
   min-width: 40px;
   min-height: 36px;
-  background-color: transparent;
+  background: none ;
+  box-shadow: none ;
+  text-shadow: none;
 }
 
 .net-action-btn label {
@@ -221,7 +196,7 @@ window {
 }
 
 .net-action-btn.connect {
-  color: $green;
+  color: $subtext;
 }
 
 .net-action-btn.disconnect {
@@ -235,15 +210,11 @@ window {
   box-shadow: none;
 }
 
-
-// =============================================
-// TOGGLES
-// =============================================
 .toggle-row {
   background-color: $surface;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 10px 16px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .toggle-info-area {
@@ -258,16 +229,21 @@ window {
   background: none;
 }
 
+.toggle-icon,
+.bt-toggle-icon,
+.sc-toggle-icon,
+.rc-toggle-icon {
+  color: $text;
+}
+
 .toggle-icon {
   font-size: 20pt;
-  color: $accent;
   margin-right: 14px;
   min-width: 32px;
 }
 
 .bt-toggle-icon {
   font-size: 20pt;
-  color: $accent;
   margin-right: 12px;
   margin-left: 3px;
   min-width: 32px;
@@ -275,18 +251,17 @@ window {
 
 .sc-toggle-icon {
   font-size: 18pt;
-  color: $accent;
   margin-right: 12px;
 }
 
 .rc-toggle-icon {
   font-size: 18pt;
-  color: $accent;
   margin-right: 8px;
 }
 
 .record-active {
-  color: #ff5555;
+  color: $red;
+  text-shadow: none;
 }
 
 .capture-toggles-row {
@@ -295,11 +270,11 @@ window {
 }
 
 .capture-btn {
-  background-color: $surface;
-  border-radius: 12px;
+  background: $surface;
+  border-radius: 16px;
   padding: 10px 4px;
-  border: none;
   transition: all 0.2s ease;
+  box-shadow: none;
 }
 
 .capture-btn:hover {
@@ -327,10 +302,15 @@ window {
   color: $subtext;
 }
 
-// Pill toggle button
+.toggle-sublabel.ssid-active {
+  color: $green;
+  font-weight: 700;
+  text-shadow: none ;
+}
+
 .toggle-btn {
   border-radius: 24px;
-  padding: 0px 0px;
+  padding: 0px;
   font-size: 11pt;
   font-weight: 700;
   border: none;
@@ -340,8 +320,8 @@ window {
 }
 
 .toggle-btn.on {
-  background-color: $accent;
-  color: #11111b;
+  background-color: $text;
+  color: #000000;
 }
 
 .toggle-btn.off {
@@ -353,15 +333,11 @@ window {
   opacity: 0.9;
 }
 
-// =============================================
-// SLIDERS
-// =============================================
-// Horizontal slider row
 .slider-row {
   background-color: $surface;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 8px 16px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .slider-v-box button {
@@ -373,7 +349,7 @@ window {
 .slider-icon {
   font-family: "Symbols Nerd Font", "SF Pro Display", sans-serif;
   font-size: 14pt;
-  color: $accent;
+  color: $text;
   min-width: 0px;
   margin-right: 12px;
 }
@@ -398,14 +374,13 @@ window {
   font-family: "SF Pro Display", "Noto Sans", sans-serif;
   font-size: 11pt;
   font-weight: 700;
-  color: $accent;
+  color: $text;
   min-width: 60px;
   padding: 4px 10px;
   border-radius: 8px;
   background-color: $accent2;
 }
 
-// GTK Scale (Horizontal)
 .cc-scale {
   padding: 0px 8px;
 }
@@ -417,48 +392,44 @@ window {
 }
 
 .cc-scale trough highlight {
-  background-color: $accent;
+  background-color: $text;
   border-radius: 12px;
 }
 
 .cc-scale trough slider {
-  background-color: $accent;
+  background-color: $text;
   border-radius: 50%;
   min-width: 20px;
   min-height: 20px;
   margin: -4px;
-  border: 2px solid $text;
+  border: 2px solid #000000;
 }
 
 .cc-scale trough slider:hover {
-  border: 2px solid $accent;
+  border: 2px solid $subtext;
 }
 
-
-// =============================================
-// WIFI ACTION POPUP
-// =============================================
 .action-popup {
   background-color: $surface2;
   border-radius: 10px;
   padding: 8px 10px;
-  margin: 4px 2px 4px 2px;
+  margin: 4px 2px;
 }
 
 .action-inlined {
-  background-color: rgba(49, 50, 68, 0.6);
+  background-color: rgba(40, 40, 40, 0.72);
   border-radius: 0px 0px 8px 8px;
   padding: 6px 10px;
-  margin: 0px 2px 2px 2px;
+  margin: 0px 2px 2px;
 }
 
-.action-header    { margin-bottom: 6px; }
+.action-header { margin-bottom: 6px; }
 
 .action-ssid {
   font-family: "Noto Sans", sans-serif;
   font-size: 9pt;
   font-weight: 700;
-  color: $accent;
+  color: $text;
 }
 
 .action-close {
@@ -470,30 +441,31 @@ window {
   font-size: 9pt;
 }
 
-.action-close:hover { color: $red; }
+.action-close:hover { color: $text; }
 
 .action-buttons { margin-top: 2px; }
 
 .action-btn {
   border: none;
   border-radius: 8px;
-  padding: 5px 14px;
-  font-size: 8pt;
+  padding: 6px 0px;
+  font-size: 9pt;
   font-weight: 700;
+  min-height: 32px;
 }
 
 .action-btn.connect {
-  background-color: $accent;
-  color: #1e1e2e;
+  background-color: $text;
+  color: #000000;
+  margin-right: 5px;
 }
 
 .action-btn.disconnect {
-  background-color: $red;
-  color: #1e1e2e;
+  background-color: transparent;
+  color: $red;
+  border: 1px solid $red;
+  margin-left: 5px;
 }
-
-.action-btn.connect:hover,
-.action-btn.disconnect:hover { opacity: 0.85; }
 
 .action-btn.small {
   padding: 3px 8px;
@@ -511,15 +483,15 @@ window {
   border: none;
 }
 
-// =============================================
-// PASSWORD FORM (INLINE)
-// =============================================
+.action-btn:hover {
+  opacity: 0.9;
+}
+
 .password-form-inline {
   background-color: transparentize($bg, 0.5);
   border-radius: 12px;
   padding: 10px;
   margin: 4px 8px 10px;
-  border: 1px solid $border;
 }
 
 .wifi-pass-input {
@@ -535,34 +507,12 @@ window {
 }
 
 .wifi-pass-input:focus {
-  border: 1px solid $accent;
+  border: 1px solid $text;
 }
 
 .password-actions {
   margin-top: 2px;
 }
-
-.action-btn {
-  border: none;
-  border-radius: 8px;
-  padding: 6px 0px;
-  font-size: 9pt;
-  font-weight: 700;
-  min-height: 32px;
-}
-
-.action-btn.connect {
-  background-color: $accent;
-  color: $bg;
-  margin-right: 5px;
-}
-
-.action-btn.disconnect {
-  background-color: $muted;
-  color: $subtext;
-  margin-left: 5px;
-}
-
-.action-btn:hover {
-  opacity: 0.9;
+.closer-inner {
+  background-color: transparent;
 }
