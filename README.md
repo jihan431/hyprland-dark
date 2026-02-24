@@ -56,8 +56,8 @@ A sophisticated glassmorphism-inspired panel for seamless system control:
 
 ### 1. Clone
 ```bash
-git clone https://github.com/jihan431/dotfiles.git
-cd dotfiles
+git clone https://github.com/jihan431/hyprland-dark.git
+cd hyprland-dark
 ```
 
 ### 2. Install
