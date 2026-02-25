@@ -33,8 +33,15 @@
       "tooltip": true
     },
     "clock": {
-      "format": "{:%H\n%M}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "{:%H\n%M}",
+        "tooltip": true,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "format": {
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        }
     },
     "hyprland/workspaces": {
       "disable-scroll": true,

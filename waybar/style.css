@@ -8,13 +8,13 @@
 }
 
 window#waybar {
-  background: rgba(35, 35, 35, 1);
+  background: rgba(35, 35, 35, 0.8);
   border: none;
   color: #ffffff;
   padding: 0;
 }
 window#waybar.left {
-  border-right: 2px solid #444444;
+  border-right: 1px solid #444444;
 }
 window#waybar.right {
   border-left: 2px solid #444444;
@@ -48,12 +48,14 @@ window#waybar.right {
   padding: 5px 3px 5px 0px;
   margin: 13px;
   color: #000000;
+  opacity: 0.5;
 }
 #custom-cc:hover {
   color: #ffffff;
   background-color: transparent;
   border: 1px solid #ffffff;
   border-radius: 10px;
+  opacity: 1;
 }
 
 #tray {
@@ -73,7 +75,6 @@ window#waybar.right {
   font-size: 17px;
 }
 
-#taskbar,
 #cpu,
 #memory {
   padding-top: 8px;
@@ -83,32 +84,17 @@ window#waybar.right {
   background: transparent;
   color: #ffffff;
   font-size: 16px;
-}
-
-#custom-launcher-right,
-#idle_inhibitor {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: 2px 0;
-  border-radius: 0;
-  background: transparent;
-  color: #ffffff;
-  font-size: 20px;
-}
-
-#custom-launcher-right:hover,
-#idle_inhibitor:hover {
-  color: #ffffff;
+  opacity: 0.5;
+  transition: all 0.2s ease;
 }
 
 #taskbar {
   padding: 8px 0;
 }
 
-#taskbar:hover,
 #cpu:hover,
 #memory:hover {
-  color: #ffffff;
+  opacity: 1;
 }
 
 #cpu,
@@ -176,14 +162,7 @@ window#waybar.right {
   color: #ffffff;
   font-size: 20px;
   font-weight: 700;
-}
-
-#custom-launcher:hover,
-#tray:hover,
-#clock:hover,
-#custom-power:hover {
-  color: #ffffff;
-  border-radius: 0;
+  font-family: "SF Compact Rounded";
 }
 
 /* === WORKSPACES === */
@@ -227,16 +206,23 @@ window#waybar.right {
   color: #cccccc;
   padding-right: 10px;
   padding-top: 10px;
+  opacity: 0.5;
 }
 
 #custom-launcher:hover {
   color: #ffffff;
+  opacity: 1;
 }
 
 /* === CLOCK === */
 #clock {
   color: #ffffff;
   font-weight: 700;
+  opacity: 0.5;
+}
+
+#clock:hover {
+  opacity: 1;
 }
 
 /* === NETWORK STATE === */
@@ -268,20 +254,21 @@ window#waybar.right {
   font-size: 25px;
   border-radius: 500px;
   padding-bottom: 10px;
+  opacity: 0.5;
 }
 
 #custom-power:hover {
   border-radius: 50px;
   margin: 10px 18px;
   color: red;
+  opacity: 1;
 }
 
 /* === TOOLTIP === */
 tooltip {
   background: rgba(30, 30, 30, 0.9);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid #444444;
   padding: 15px;
   min-width: 320px;
   font-family: "SF Compact";
@@ -290,7 +277,8 @@ tooltip {
 tooltip label {
   color: #f0f0f0;
   font-size: 20px;
-  padding: 8px;
+  padding: 5px;
+  font-family: "SF Compact";
 }
 
 /* === CALENDAR (Inside Clock Tooltip) === */
@@ -420,6 +408,7 @@ calendar:indeterminate {
   margin: 13px;
   border-radius: 10px;
   border: 2px solid #ffffff;
+  opacity: 0.5;
 }
 
 #custom-battery-fill.level-0-charging,
