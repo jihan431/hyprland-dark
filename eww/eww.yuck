@@ -273,11 +273,11 @@
   :monitor 0
   :stacking "bottom"
   :wm-ignore false
-  :geometry (geometry :x "400px"
-                      :y "10px"
+  :geometry (geometry :x "0px"
+                      :y "0px"
                       :width "440px"
                       :height "700px"
-                      :anchor "center right")
+                      :anchor "center")
   (box :orientation "v"
        :space-evenly false
        :class "clock-box"
