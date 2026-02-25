@@ -9,9 +9,15 @@
 
 window#waybar {
   background: rgba(35, 35, 35, 1);
-  border-right: 2px solid #444444;
+  border: none;
   color: #ffffff;
   padding: 0;
+}
+window#waybar.left {
+  border-right: 2px solid #444444;
+}
+window#waybar.right {
+  border-left: 2px solid #444444;
 }
 
 .modules-left,
@@ -39,7 +45,7 @@ window#waybar {
   margin-top: 10px;
   min-width: 0px;
   min-height: 30px;
-  padding: 5 3 5 0px;
+  padding: 5px 3px 5px 0px;
   margin: 13px;
   color: #000000;
 }
@@ -65,6 +71,70 @@ window#waybar {
   background: transparent;
   color: #ffffff;
   font-size: 17px;
+}
+
+#taskbar,
+#cpu,
+#memory {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 2px 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+#custom-launcher-right,
+#idle_inhibitor {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 2px 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+#custom-launcher-right:hover,
+#idle_inhibitor:hover {
+  color: #ffffff;
+}
+
+#taskbar {
+  padding: 8px 0;
+}
+
+#taskbar:hover,
+#cpu:hover,
+#memory:hover {
+  color: #ffffff;
+}
+
+#cpu,
+#memory {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#taskbar button {
+  padding: 6px 0;
+  margin: 4px 0;
+  border-radius: 0;
+  background: transparent;
+  color: #cccccc;
+}
+
+#taskbar button:hover {
+  color: #ffffff;
+  background: transparent;
+}
+
+#taskbar button.active {
+  color: #ffffff;
 }
 
 #network {
@@ -345,7 +415,7 @@ calendar:indeterminate {
 #custom-battery-fill.level-100 {
   font-size: 40px;
   color: #000000;
-  min-height: 150px;
+  min-height: 120px;
   margin-top: 5px;
   margin: 13px;
   border-radius: 10px;
@@ -375,7 +445,7 @@ calendar:indeterminate {
 #custom-battery-fill.level-100-charging {
   font-size: 25px;
   color: #222222;
-  min-height: 70px;
+  min-height: 60px;
   border-radius: 10px;
   margin: 13px;
   border: 2px solid #ffffff;

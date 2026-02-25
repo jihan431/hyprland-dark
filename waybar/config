@@ -7,7 +7,7 @@
     "reload_style_on_change": true,
     "gtk-layer-shell": false,
     "width": 70,
-    "fixed-center": false,
+    "fixed-center": true,
     "expand-center": true,
     "spacing": 0,
     "modules-left": [
@@ -16,9 +16,12 @@
       "hyprland/workspaces",
       "tray"
     ],
-    "modules-center": [],
+    "modules-center": [
+      "custom/cava"
+    ],
     "modules-right": [
-      "custom/cava",
+      "cpu",
+      "memory",
       "custom/battery-fill",
       "custom/cc",
       "custom/power"
@@ -90,6 +93,16 @@
       "format": "󰣇",
       "on-click": "~/.config/waybar/scripts/eww-control-center-toggle.sh",
       "tooltip": false
+    },
+    "cpu": {
+      "format": "CPU\n{usage}%",
+      "tooltip": true,
+      "interval": 2
+    },
+    "memory": {
+      "format": "RAM\n{}%",
+      "tooltip": true,
+      "interval": 2
     }
   }
 ]

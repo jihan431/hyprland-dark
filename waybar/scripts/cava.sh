@@ -2,7 +2,7 @@
 
 set -u
 
-readonly BARS="${CAVA_BARS:-12}"
+readonly BARS="${CAVA_BARS:-8}"
 readonly MAX_LEVEL="${CAVA_MAX_LEVEL:-8}"
 readonly FALL_STEP="${CAVA_FALL_STEP:-1}"
 readonly NOISE_GATE="${CAVA_NOISE_GATE:-0}"
