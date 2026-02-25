@@ -64,7 +64,7 @@
     },
     "tray": {
       "icon-size": 20,
-      "spacing": 8,
+      "spacing": 32,
       "ignore-list": [
         "blueman-applet"
       ]
@@ -86,7 +86,7 @@
       "rotate": 270,
       "tooltip": false
     },
-      "custom/cc": {
+    "custom/cc": {
       "format": "󰣇",
       "on-click": "~/.config/waybar/scripts/eww-control-center-toggle.sh",
       "tooltip": false

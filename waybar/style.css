@@ -43,7 +43,7 @@ window#waybar {
   margin: 13px;
   color: #000000;
 }
-#custom-cc:hover{
+#custom-cc:hover {
   color: #ffffff;
   background-color: transparent;
   border: 1px solid #ffffff;
@@ -51,7 +51,7 @@ window#waybar {
 }
 
 #tray {
-  padding: 15px;
+  padding-top: 15px;
   font-size: 15px;
 }
 
