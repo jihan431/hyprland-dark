@@ -125,6 +125,13 @@ window {
   min-width: 100px;
 }
 
+.empty-list-text {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 10pt;
+  color: $subtext;
+  padding: 10px 12px;
+}
+
 .net-item {
   background-color: transparent;
   background-image: none;

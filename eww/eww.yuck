@@ -7,14 +7,14 @@
 (defpoll min  :interval "1s" `date +%M`)
 
 ;; WiFi status: 1 = ON, 0 = OFF
-(defpoll wifi-enabled :interval "500ms"
+(defpoll wifi-enabled :interval "2s"
   `~/dotfiles/eww/scripts/wifi-status.sh`)
 
 (defpoll wifi-list :interval "15s" :initial "[]"
   `~/dotfiles/eww/scripts/wifi-list.sh`)
 
 ;; SSID yang sedang aktif/connected
-(defpoll active-ssid :interval "3s" :initial ""
+(defpoll active-ssid :interval "5s" :initial ""
   `nmcli -t -f ACTIVE,SSID device wifi 2>/dev/null | awk -F: '/^yes/{print $2}'`)
 
 ;; State: jaringan yang diklik di list
@@ -23,27 +23,30 @@
 
 ;; Bluetooth status
 (defpoll bt-enabled :interval "1s"
-  `bluetoothctl show 2>/dev/null | grep -c "Powered: yes"`)
+  `~/dotfiles/eww/scripts/bt-status.sh`)
 
-(defpoll bt-list :interval "10s" :initial "[]"
+(defpoll bt-list :interval "4s" :initial "[]"
   `~/dotfiles/eww/scripts/bt-list.sh`)
 
+(defpoll bt-device-count :interval "2s" :initial "0"
+  `~/dotfiles/eww/scripts/bt-device-count.sh`)
+
 ;; Volume (0-100)
-(defpoll volume :interval "1s"
+(defpoll volume :interval "2s"
   :initial `pamixer --get-volume 2>/dev/null || echo 0`
   `pamixer --get-volume 2>/dev/null || echo 0`)
 
 ;; Brightness (0-100)
-(defpoll brightness :interval "1s"
+(defpoll brightness :interval "2s"
   :initial `echo $(($(brightnessctl get) * 100 / $(brightnessctl max)))`
   `echo $(($(brightnessctl get) * 100 / $(brightnessctl max)))`)
 
 ;; Microphone (0-100)
-(defpoll mic-volume :interval "1s"
+(defpoll mic-volume :interval "2s"
   :initial `pamixer --default-source --get-volume 2>/dev/null || echo 0`
   `pamixer --default-source --get-volume 2>/dev/null || echo 0`)
 
-(defpoll mic-muted :interval "1s"
+(defpoll mic-muted :interval "2s"
   :initial `pamixer --default-source --get-mute 2>/dev/null || echo false`
   `pamixer --default-source --get-mute 2>/dev/null || echo false`)
 
@@ -162,16 +165,20 @@
 ;; --- BT expandable panel ---
 (defwidget bt-panel []
   (revealer :transition "slidedown"
-            :reveal show-bt
+            :reveal {show-bt && bt-enabled == 1}
             :duration "200ms"
     (box :orientation "v" :space-evenly false :hexpand true
       (box :class "panel-header" :orientation "h" :space-evenly false :hexpand true
         (label :class "panel-title" :text "Devices" :hexpand true :halign "start")
         (button :class "list-btn"
+                :visible {bt-enabled == 1}
                 :onclick "bash -c '~/dotfiles/eww/scripts/bt-scan.sh &'"
           (label :text "SCAN")))
       (scroll :vscroll true :hscroll false :height 160
         (box :class "list-panel" :orientation "v" :space-evenly false
+          (label :class "empty-list-text"
+                 :visible {bt-device-count == 0}
+                 :text "No devices found. Tap SCAN.")
           (for dev in bt-list
             (bt-item :dev dev)))))))
 
@@ -183,7 +190,7 @@
          :space-evenly false
          :valign "center"
       (button :class "toggle-info-area" :hexpand true
-              :onclick "eww --config $HOME/dotfiles/eww update show-bt=${show-bt ? false : true}"
+              :onclick "bash -c '~/dotfiles/eww/scripts/bt-panel-toggle.sh ${show-bt} ${bt-enabled} ${bt-device-count} &'"
         (box :orientation "h" :space-evenly false :valign "center"
           (label :class "bt-toggle-icon" :text "󰂯" :halign "center")
           (box :orientation "v" :space-evenly false :halign "start" :valign "center"
@@ -192,7 +199,7 @@
                    :halign "start" :valign "center"))))
       (button
         :class {bt-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
-        :onclick "~/dotfiles/eww/scripts/bt-toggle.sh"
+        :onclick "bash -c '~/dotfiles/eww/scripts/bt-toggle.sh ${bt-enabled} &'"
         (label :text {bt-enabled == 1 ? "ON" : "OFF"})))
     (bt-panel)))
 
