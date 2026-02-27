@@ -69,7 +69,7 @@ PACKAGES="hyprland waybar rofi-wayland eww-wayland kitty \
 dunst swww polkit-kde-agent nemo nemo-fileroller \
 hyprlock hypridle file-roller jq qt6ct wireplumber \
 xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
-grim slurp wl-clipboard wf-recorder pamixer brightnessctl \
+grim slurp wl-clipboard wf-recorder cliphist pamixer brightnessctl \
 inverse-icon-theme-git bibata-cursor-theme \
 visual-studio-code-bin google-chrome spotify scrcpy \
 bluez-utils networkmanager fastfetch gvfs"
@@ -132,6 +132,7 @@ link_config "gtk-3.0"
 link_config "gtk-4.0"
 link_config "kitty"
 link_config "dunst"
+link_config "hypridle"
 
 # --- 4. LINK FILE (Untuk .bashrc dll) ---
 link_file() {

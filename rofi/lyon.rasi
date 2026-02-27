@@ -6,7 +6,7 @@
     fg:                 #f0f0f0;
     fg-muted:           #a8a8a8;
     accent:             #dbdbdb;
-    border:             rgba(255, 255, 255, 0.1);
+    border:             rgba(255, 255, 255, 0.2);
     background-utama:   @bg;
     background-aksen:   @bg-selected;
     teks-utama:         @fg;
@@ -41,6 +41,7 @@ window {
     anchor:             west;
     width:              500px;
     border-radius:      24px;
+    border:             1px;
     border-color:       @border;
     background-color:   @bg;
     children:           [ mainbox ];

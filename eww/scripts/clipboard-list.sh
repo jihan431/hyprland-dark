@@ -44,15 +44,30 @@ for line in output.splitlines():
         continue
 
     preview = " ".join(preview.split())
+    icon = "󰅌"
+    if "[[ binary data" in preview:
+        icon = "󰋩"
+        # Try to extract format/size if possible
+        # e.g. [[ binary data 237 KiB png 1920x1080 ]]
+        parts = preview.replace("[[", "").replace("]]", "").split()
+        if len(parts) >= 5:
+             # parts = ['binary', 'data', '237', 'KiB', 'png', ...]
+             ext = parts[4].upper()
+             size = f"{parts[2]} {parts[3]}"
+             preview = f"Photo ({ext}, {size})"
+        else:
+             preview = "Photo/Image"
+    
     if not preview:
-        preview = "[binary]"
-    if len(preview) > 72:
+        preview = "[empty]"
+    elif len(preview) > 72:
         preview = preview[:72] + "..."
 
     items.append(
         {
             "id": item_id,
             "text": preview,
+            "icon": icon,
         }
     )
     if len(items) >= limit:

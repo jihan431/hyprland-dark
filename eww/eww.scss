@@ -1,4 +1,4 @@
-$bg:       rgb(35, 35, 35);
+$bg:       rgba(35, 35, 35, );
 $surface:  rgba(255, 255, 255, 0.05);
 $surface2: rgba(255, 255, 255, 0.08);
 $surface3: rgba(255, 255, 255, 0.12);
@@ -10,7 +10,7 @@ $yellow:   #fff176;
 $text:     #f0f0f0;
 $subtext:  #a8a8a8;
 $muted:    #666666;
-$border:   rgba(255, 255, 255, 0.1);
+$border:   rgba(255, 255, 255, 0.2);
 
 window {
   background-color: transparent;
@@ -36,8 +36,9 @@ window {
 
 .cc-box {
   background-color: $bg;
-  border-radius: 22px;
-  padding: 18px;
+  border: 1px solid $border;
+  border-radius: 20px;
+  padding: 20px;
   font-family: "Noto Sans", "Cantarell", sans-serif;
 }
 
@@ -55,26 +56,27 @@ window {
 
 .cc-title {
   font-family: "Noto Sans", "Cantarell", sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
   color: $text;
   letter-spacing: 0.2px;
 }
 
 .cc-close-btn {
-  background: none;
+  background: transparent;
   border: none;
-  border-radius: 9px;
-  padding: 2px 8px;
+  border-radius: 20px;
+  padding: 4px;
   color: $subtext;
-  font-size: 18px;
-  min-width: 34px;
-  min-height: 34px;
+  font-size: 20px;
+  min-width: 38px;
+  min-height: 38px;
   box-shadow: none;
 }
 
 .cc-close-btn:hover {
   color: $text;
+  background-color: $surface2;
 }
 
 .cc-divider {
@@ -125,8 +127,8 @@ window {
 
 .cc-tabbar {
   background-color: $surface;
-  border-radius: 12px;
-  padding: 5px;
+  border-radius: 8px;
+  padding: 2px;
   margin-bottom: 6px;
 }
 
@@ -134,10 +136,11 @@ window {
   background: transparent;
   border: none;
   border-radius: 8px;
-  padding: 8px 4px;
+  padding: 10px 6px;
   color: $subtext;
-  min-height: 34px;
+  min-height: 42px;
   box-shadow: none;
+  transition: all 0.2s ease;
 }
 
 .cc-tab-btn.active {
@@ -151,8 +154,8 @@ window {
 }
 
 .cc-tab-icon {
-  font-size: 14px;
-  margin-right: 5px;
+  font-size: 20px;
+  margin-right: 0px;
 }
 
 .cc-tab-label {
@@ -170,10 +173,10 @@ window {
 }
 
 .tab-scroll {
-  margin-top: 0px;
-  background-color: $surface;
-  border-radius: 12px;
-  padding: 4px;
+  margin-top: 8px;
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 0px;
 }
 
 .quick-tab .toggle-row {
@@ -182,8 +185,8 @@ window {
 
 .list-panel {
   background-color: transparent;
-  border-radius: 10px;
-  padding: 3px;
+  border-radius: 8px;
+  padding: 0px;
   margin-bottom: 0px;
 }
 
@@ -201,8 +204,11 @@ window {
   margin-bottom: 8px;
 }
 
-.quick-tab .slider-row:last-child {
-  margin-bottom: 0px;
+.toggle-row {
+  padding: 12px 18px;
+  background-color: $surface;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .panel-header {
@@ -212,7 +218,7 @@ window {
 }
 
 .panel-title {
-  font-size: 10pt;
+  font-size: 20pt;
   font-weight: 700;
   color: $subtext;
   letter-spacing: 1px;
@@ -227,23 +233,21 @@ window {
 }
 
 .net-item {
-  background-color: transparent;
+  background-color: $surface;
   background-image: none;
   border-radius: 8px;
-  padding: 9px 10px;
-  margin: 2px;
+  padding: 12px 18px;
+  margin: 4px 2px;
   box-shadow: none;
+  transition: all 0.2s ease;
 }
 
 .net-item:hover {
-  background-color: transparent;
-  background-image: none;
-  background: none;
-  box-shadow: none;
+  background-color: $surface2;
 }
 
 .net-item.connected {
-  background-color: $accent2;
+  background-color: $surface3;
   border-radius: 8px;
 }
 
@@ -311,12 +315,7 @@ window {
   box-shadow: none;
 }
 
-.toggle-row {
-  background-color: $surface;
-  border-radius: 14px;
-  padding: 10px 14px;
-  margin-bottom: 7px;
-}
+
 
 .toggle-info-area {
   background: none;
@@ -359,19 +358,23 @@ window {
 }
 
 .caffeine-toggle-icon {
-  font-size: 17px;
-  margin-right: 10px;
-  min-width: 26px;
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.caffeine-toggle-icon.active {
+  color: $green;
+  text-shadow: none;
 }
 
 .sc-toggle-icon {
-  font-size: 17px;
+  font-size: 20px;
   margin-right: 10px;
 }
 
 .rc-toggle-icon {
-  font-size: 17px;
-  margin-right: 7px;
+  font-size: 20px;
+  margin-right: 8px;
 }
 
 .record-active {
@@ -386,8 +389,8 @@ window {
 
 .capture-btn {
   background: $surface;
-  border-radius: 14px;
-  padding: 10px 8px;
+  border-radius: 8px;
+  padding: 16px 12px;
   transition: all 0.2s ease;
   box-shadow: none;
 }
@@ -398,7 +401,7 @@ window {
 
 .capture-label {
   font-family: "Noto Sans", "Cantarell", sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: $text;
 }
@@ -430,10 +433,10 @@ window {
 }
 
 .toggle-btn {
-  border-radius: 24px;
-  padding: 0px;
+  border-radius: 8px;
+  padding: 0px 14px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   border: none;
   min-width: 66px;
   min-height: 34px;
@@ -454,9 +457,24 @@ window {
   opacity: 0.9;
 }
 
+.power-btn-match:hover {
+  background-color: $red;
+}
+
+.power-btn-match:hover .capture-label,
+.power-btn-match:hover .power-icon-match {
+  color: #000000;
+}
+
+.power-icon-match {
+  font-size: 20px;
+  margin-right: 8px;
+  color: $red;
+}
+
 .slider-row {
   background-color: $surface;
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 8px 14px;
   margin-bottom: 7px;
 }
@@ -593,7 +611,7 @@ window {
   font-size: 8pt;
   font-weight: 700;
   min-width: 90px;
-  border-radius: 6px;
+  border-radius: 32px;
 }
 
 .action-btn.hidden {
@@ -609,23 +627,61 @@ window {
 }
 
 .password-form-inline {
-  background-color: transparentize($bg, 0.5);
-  border-radius: 12px;
-  padding: 10px;
-  margin: 4px 8px 10px;
+  background-color: rgba(35, 35, 35, 0.5);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 6px 8px 12px;
 }
 
 .wifi-pass-input {
   background-color: $surface2;
   border-radius: 8px;
   border: 1px solid $muted;
-  padding: 8px 12px;
+  padding: 8px 16px;
   color: $text;
   font-family: "SF Pro Display", "Noto Sans", sans-serif;
   font-size: 10pt;
   margin-bottom: 10px;
   min-height: 36px;
 }
+
+.system-stats-box {
+  background-color: transparent;
+  padding: 8px 2px 2px;
+  margin-top: 5px;
+}
+
+.stat-item-box {
+  background-color: $surface;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 52px;
+}
+
+.stat-icon {
+  font-size: 19px;
+  margin-right: 10px;
+}
+
+.stat-label {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: $subtext;
+  margin-bottom: -1px;
+}
+
+.stat-value {
+  font-family: "Roboto Mono", monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: $text;
+}
+
+.cpu-color { color: $accent; }
+.ram-color { color: $green; }
+.disk-color { color: $yellow; }
+.uptime-color { color: #81d4fa; }
 
 .wifi-pass-input:focus {
   border: 1px solid $text;

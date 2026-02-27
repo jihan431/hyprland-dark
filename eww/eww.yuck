@@ -65,6 +65,22 @@
   :initial "false"
   "pgrep -x wf-recorder > /dev/null && echo true || echo false")
 
+;; System Stats
+(defpoll disk-usage :interval "1m"
+  "df -h / | tail -1 | awk '{print $5}' | sed 's/%//'")
+
+(defpoll uptime-val :interval "1m"
+  `uptime -p | awk '{
+    gsub(/up |,/, "");
+    for (i=1; i<=NF; i++) {
+        if ($i ~ /day/) d=$(i-1)"d ";
+        if ($i ~ /hour/) h=$(i-1)"h ";
+        if ($i ~ /minute/) m=$(i-1)"m";
+    }
+    if (d != "") print d h;
+    else print h m;
+  }'`)
+
 ;; State: active control-center tab
 (defvar active-tab "quick")
 
@@ -99,7 +115,7 @@
 ;; --- WiFi network item ---
 (defwidget wifi-item [net]
   (box :orientation "v" :space-evenly false
-    (box :orientation "h" :space-evenly false :valign "center"
+    (box :orientation "h" :space-evenly false :valign "center" :hexpand true
          :class {net.active ? "net-item connected" : "net-item"}
       (label :class {net.active ? "net-icon active" : "net-icon"}
              :text {net.active ? "󰤨" : "󰤡"})
@@ -131,32 +147,32 @@
 ;; --- BT device item ---
 (defwidget bt-item [dev]
   (button :class {dev.connected ? "net-item connected" : "net-item"}
+          :hexpand true
           :onclick "bash -c '~/dotfiles/eww/scripts/bt-action.sh \"${dev.mac}\" \"${dev.name}\" &'"
-    (box :orientation "h" :space-evenly false :valign "center"
+    (box :orientation "h" :space-evenly false :valign "center" :hexpand true
       (label :class "net-icon"
-             :text {dev.connected ? "󰂱" : "󰂯"})
+             :text {dev.connected ? "󰂱" : "󰂯"} :valign "center")
       (label :class "net-name" :text {dev.name}
-             :hexpand true :halign "start" :truncate true))))
+             :hexpand true :halign "start" :truncate true :valign "center"))))
 
-;; --- Caffeine Toggle row ---
-(defwidget caffeine-toggle []
-  (box :class "toggle-row"
+;; --- Caffeine & Power Toggle row ---
+(defwidget caffeine-power-toggles []
+  (box :class "capture-toggles-row"
        :orientation "h"
-       :space-evenly false
-       :valign "center"
-    (button :class "toggle-info-area" :hexpand true
+       :space-evenly true
+       :spacing 10
+    (button :class "capture-btn"
             :onclick "bash -c '~/dotfiles/eww/scripts/caffeine-toggle.sh &'"
-      (box :orientation "h" :space-evenly false :valign "center"
-        (label :class "caffeine-toggle-icon" :text "󰅶" :halign "center")
-        (box :orientation "v" :space-evenly false :halign "start" :valign "center"
-          (label :class "toggle-label" :text "Caffeine" :halign "start")
-          (label :class "toggle-sublabel"
-                 :text {caffeine-enabled == 1 ? "Prevent sleep" : "Allow sleep"}
-                 :halign "start" :valign "center"))))
-    (button
-      :class {caffeine-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
-      :onclick "bash -c '~/dotfiles/eww/scripts/caffeine-toggle.sh &'"
-      (label :text {caffeine-enabled == 1 ? "ON" : "OFF"}))))
+      (box :orientation "h" :space-evenly false :valign "center" :halign "center"
+        (label :class {caffeine-enabled == 1 ? "caffeine-toggle-icon active" : "caffeine-toggle-icon"} 
+               :text "󰅶")
+        (label :class "capture-label" :text {caffeine-enabled == 1 ? "Caffeine" : "Caffeine"})))
+    
+    (button :class "capture-btn power-btn-match"
+            :onclick "bash -c '~/dotfiles/waybar/scripts/power-menu.sh &'"
+      (box :orientation "h" :space-evenly false :valign "center" :halign "center"
+        (label :class "power-icon-match" :text "󰐥")
+        (label :class "capture-label" :text "Power")))))
 
 ;; --- Tab bar button ---
 (defwidget cc-tab-btn [id label icon]
@@ -164,8 +180,7 @@
           :hexpand true
           :onclick "eww --config $HOME/dotfiles/eww update active-tab='${id}'"
     (box :orientation "h" :space-evenly false :valign "center" :halign "center"
-      (label :class "cc-tab-icon" :text icon)
-      (label :class "cc-tab-label" :text label))))
+      (label :class "cc-tab-icon" :text icon))))
 
 ;; --- Top tabs ---
 (defwidget cc-tabbar []
@@ -187,6 +202,7 @@
          :orientation "h"
          :space-evenly false
          :valign "center"
+         :hexpand true
       (box :orientation "h" :space-evenly false :valign "center" :hexpand true
         (label :class "toggle-icon" :text "󰀃" :halign "center")
         (box :orientation "v" :space-evenly false :halign "start" :valign "center"
@@ -216,6 +232,7 @@
          :orientation "h"
          :space-evenly false
          :valign "center"
+         :hexpand true
       (box :orientation "h" :space-evenly false :valign "center" :hexpand true
         (label :class "bt-toggle-icon" :text "󰂯" :halign "center")
         (box :orientation "v" :space-evenly false :halign "start" :valign "center"
@@ -251,6 +268,7 @@
          :orientation "h"
          :space-evenly false
          :valign "center"
+         :hexpand true
       (box :orientation "h" :space-evenly false :valign "center" :hexpand true
         (label :class "clip-toggle-icon" :text "󰅌" :halign "center")
         (box :orientation "v" :space-evenly false :halign "start" :valign "center"
@@ -278,10 +296,11 @@
          :orientation "v"
          :space-evenly false
       (capture-toggles)
-      (caffeine-toggle)
+      (caffeine-power-toggles)
       (volume-slider)
       (mic-slider)
-      (brightness-slider))))
+      (brightness-slider)
+      (system-stats))))
 
 ;; --- Tab stack ---
 (defwidget cc-tab-content []
@@ -297,14 +316,29 @@
     (box :visible {active-tab == "clipboard"}
       (clipboard-tab))))
 
+;; --- System Stats Widget ---
+(defwidget system-stats []
+  (box :class "system-stats-box" :orientation "v" :space-evenly false
+    (box :class "stats-grid" :orientation "h" :space-evenly true :spacing 10
+      (stat-item :label "Disk" :value "${disk-usage}%" :icon "󰋊" :color "disk-color")
+      (stat-item :label "Uptime" :value "${uptime-val}" :icon "󰅐" :color "uptime-color"))))
+
+(defwidget stat-item [label value icon color]
+  (box :class "stat-item-box" :orientation "h" :space-evenly false :hexpand true
+    (box :orientation "h" :space-evenly false :halign "center" :hexpand true
+      (label :class "stat-icon ${color}" :text icon :valign "center")
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :class "stat-label" :text label :halign "start")
+        (label :class "stat-value" :text value :halign "start" :truncate true)))))
+
 ;; --- Clipboard history item ---
 (defwidget clipboard-item [item]
   (button :class "net-item"
           :onclick "bash -c '~/dotfiles/eww/scripts/clipboard-copy.sh \"${item.id}\" &'"
-    (box :orientation "h" :space-evenly false :valign "center"
-      (label :class "clip-toggle-icon" :text "󰅌")
+    (box :orientation "h" :space-evenly false :valign "center" :hexpand true
+      (label :class "clip-toggle-icon" :text {item.icon} :valign "center")
       (label :class "clipboard-name" :text {item.text}
-             :hexpand true :halign "start" :truncate true))))
+             :hexpand true :halign "start" :truncate true :valign "center"))))
 
 ;; --- Volume Slider ---
 (defwidget volume-slider []
@@ -357,7 +391,7 @@
       (label :class "cc-title" :text "Control Center"
              :hexpand true :halign "start")
       (button :class "cc-close-btn"
-              :onclick "eww --config $HOME/dotfiles/eww close control_center"
+              :onclick "eww close control_center"
         (label :text "󰅖")))
     (box :class "cc-divider")
     (cc-tabbar)

@@ -36,6 +36,7 @@ stop_caffeine() {
         sleep 0.1
         kill -9 "$pid" 2>/dev/null || true
     fi
+    hyprctl dispatch idle-inhibit 0 >/dev/null 2>&1
     rm -f "$PID_FILE"
 }
 
@@ -59,13 +60,9 @@ start_caffeine() {
     EWW_CAFFEINE=1 bash -c 'while :; do sleep 600; done' >/dev/null 2>&1 &
     pid=$!
     sleep 0.15
-    if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null && pid_is_caffeine "$pid"; then
-        echo "$pid" > "$PID_FILE"
-        return 0
-    fi
-
-    rm -f "$PID_FILE"
-    return 1
+    hyprctl dispatch idle-inhibit 1 >/dev/null 2>&1
+    echo "$pid" > "$PID_FILE"
+    return 0
 }
 
 if is_active; then
