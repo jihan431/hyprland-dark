@@ -17,10 +17,6 @@
 (defpoll active-ssid :interval "5s" :initial ""
   `nmcli -t -f ACTIVE,SSID device wifi 2>/dev/null | awk -F: '/^yes/{print $2}'`)
 
-;; State: jaringan yang diklik di list
-(defvar selected-wifi "")
-(defvar show-wifi-action false)
-
 ;; Bluetooth status
 (defpoll bt-enabled :interval "1s"
   `~/dotfiles/eww/scripts/bt-status.sh`)
@@ -30,6 +26,20 @@
 
 (defpoll bt-device-count :interval "2s" :initial "0"
   `~/dotfiles/eww/scripts/bt-device-count.sh`)
+
+;; Caffeine status: 1 = ON, 0 = OFF
+(defpoll caffeine-enabled :interval "2s"
+  `~/dotfiles/eww/scripts/caffeine-status.sh`)
+
+;; Clipboard history (cliphist)
+(defpoll clipboard-list :interval "3s" :initial "[]"
+  `~/dotfiles/eww/scripts/clipboard-list.sh`)
+
+(defpoll clipboard-count :interval "3s" :initial "0"
+  `~/dotfiles/eww/scripts/clipboard-count.sh`)
+
+(defpoll clipboard-subtitle :interval "3s" :initial "Empty"
+  `~/dotfiles/eww/scripts/clipboard-subtitle.sh`)
 
 ;; Volume (0-100)
 (defpoll volume :interval "2s"
@@ -55,9 +65,8 @@
   :initial "false"
   "pgrep -x wf-recorder > /dev/null && echo true || echo false")
 
-;; State: expand/collapse list panels
-(defvar show-wifi false)
-(defvar show-bt false)
+;; State: active control-center tab
+(defvar active-tab "quick")
 
 ;; Password form native
 (defvar show-password-form false)
@@ -119,39 +128,6 @@
             :onclick "eww --config $HOME/dotfiles/eww update show-password-form=false wifi-password=''"
             (label :text "Cancel")))))))
 
-;; --- WiFi expandable panel ---
-(defwidget wifi-panel []
-  (revealer :transition "slidedown"
-            :reveal {show-wifi && wifi-enabled == 1}
-            :duration "200ms"
-    (box :orientation "v" :space-evenly false
-      (scroll :vscroll true :hscroll false :height {show-password-form ? 280 : 200}
-        (box :class "list-panel" :orientation "v" :space-evenly false
-          (for net in wifi-list
-            (wifi-item :net net)))))))
-
-;; --- WiFi Toggle row ---
-(defwidget wifi-toggle []
-  (box :orientation "v" :space-evenly false
-    (box :class "toggle-row"
-         :orientation "h"
-         :space-evenly false
-         :valign "center"
-      (button :class "toggle-info-area" :hexpand true
-              :onclick "eww --config $HOME/dotfiles/eww update show-wifi=${show-wifi ? false : true} show-wifi-action=false"
-        (box :orientation "h" :space-evenly false :valign "center"
-          (label :class "toggle-icon" :text "󰀃" :halign "center")
-          (box :orientation "v" :space-evenly false :halign "start" :valign "center"
-            (label :class "toggle-label" :text "Wi-Fi" :halign "start")
-            (label :class {active-ssid != "" ? "toggle-sublabel ssid-active" : "toggle-sublabel"}
-                   :text {wifi-enabled == 1 ? (active-ssid != "" ? active-ssid : "Disconnected") : "Off"}
-                   :halign "start" :valign "center"))))
-      (button
-        :class {wifi-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
-        :onclick "~/dotfiles/eww/scripts/wifi-toggle.sh"
-        (label :text {wifi-enabled == 1 ? "ON" : "OFF"})))
-    (wifi-panel)))
-
 ;; --- BT device item ---
 (defwidget bt-item [dev]
   (button :class {dev.connected ? "net-item connected" : "net-item"}
@@ -162,46 +138,173 @@
       (label :class "net-name" :text {dev.name}
              :hexpand true :halign "start" :truncate true))))
 
-;; --- BT expandable panel ---
-(defwidget bt-panel []
-  (revealer :transition "slidedown"
-            :reveal {show-bt && bt-enabled == 1}
-            :duration "200ms"
-    (box :orientation "v" :space-evenly false :hexpand true
-      (box :class "panel-header" :orientation "h" :space-evenly false :hexpand true
-        (label :class "panel-title" :text "Devices" :hexpand true :halign "start")
-        (button :class "list-btn"
-                :visible {bt-enabled == 1}
-                :onclick "bash -c '~/dotfiles/eww/scripts/bt-scan.sh &'"
-          (label :text "SCAN")))
-      (scroll :vscroll true :hscroll false :height 160
-        (box :class "list-panel" :orientation "v" :space-evenly false
-          (label :class "empty-list-text"
-                 :visible {bt-device-count == 0}
-                 :text "No devices found. Tap SCAN.")
-          (for dev in bt-list
-            (bt-item :dev dev)))))))
+;; --- Caffeine Toggle row ---
+(defwidget caffeine-toggle []
+  (box :class "toggle-row"
+       :orientation "h"
+       :space-evenly false
+       :valign "center"
+    (button :class "toggle-info-area" :hexpand true
+            :onclick "bash -c '~/dotfiles/eww/scripts/caffeine-toggle.sh &'"
+      (box :orientation "h" :space-evenly false :valign "center"
+        (label :class "caffeine-toggle-icon" :text "󰅶" :halign "center")
+        (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+          (label :class "toggle-label" :text "Caffeine" :halign "start")
+          (label :class "toggle-sublabel"
+                 :text {caffeine-enabled == 1 ? "Prevent sleep" : "Allow sleep"}
+                 :halign "start" :valign "center"))))
+    (button
+      :class {caffeine-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
+      :onclick "bash -c '~/dotfiles/eww/scripts/caffeine-toggle.sh &'"
+      (label :text {caffeine-enabled == 1 ? "ON" : "OFF"}))))
 
-;; --- BT Toggle row ---
-(defwidget bt-toggle []
-  (box :orientation "v" :space-evenly false
+;; --- Tab bar button ---
+(defwidget cc-tab-btn [id label icon]
+  (button :class {active-tab == id ? "cc-tab-btn active" : "cc-tab-btn"}
+          :hexpand true
+          :onclick "eww --config $HOME/dotfiles/eww update active-tab='${id}'"
+    (box :orientation "h" :space-evenly false :valign "center" :halign "center"
+      (label :class "cc-tab-icon" :text icon)
+      (label :class "cc-tab-label" :text label))))
+
+;; --- Top tabs ---
+(defwidget cc-tabbar []
+  (box :class "cc-tabbar"
+       :orientation "h"
+       :space-evenly true
+       :spacing 8
+    (cc-tab-btn :id "quick"     :label ""      :icon "󰋜")
+    (cc-tab-btn :id "wifi"      :label ""      :icon "󰀃")
+    (cc-tab-btn :id "bluetooth" :label ""  :icon "󰂯")
+    (cc-tab-btn :id "clipboard" :label ""  :icon "󰅌")))
+
+;; --- Wi-Fi tab content ---
+(defwidget wifi-tab []
+  (box :class "tab-pane"
+       :orientation "v"
+       :space-evenly false
     (box :class "toggle-row"
          :orientation "h"
          :space-evenly false
          :valign "center"
-      (button :class "toggle-info-area" :hexpand true
-              :onclick "bash -c '~/dotfiles/eww/scripts/bt-panel-toggle.sh ${show-bt} ${bt-enabled} ${bt-device-count} &'"
-        (box :orientation "h" :space-evenly false :valign "center"
-          (label :class "bt-toggle-icon" :text "󰂯" :halign "center")
-          (box :orientation "v" :space-evenly false :halign "start" :valign "center"
-            (label :class "toggle-label" :text "Bluetooth" :halign "start")
-            (label :class "toggle-sublabel" :text {bt-enabled == 1 ? "On" : "Off"}
-                   :halign "start" :valign "center"))))
+      (box :orientation "h" :space-evenly false :valign "center" :hexpand true
+        (label :class "toggle-icon" :text "󰀃" :halign "center")
+        (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+          (label :class "toggle-label" :text "Wi-Fi" :halign "start")
+          (label :class {active-ssid != "" ? "toggle-sublabel ssid-active" : "toggle-sublabel"}
+                 :text {wifi-enabled == 1 ? (active-ssid != "" ? active-ssid : "Disconnected") : "Off"}
+                 :halign "start" :valign "center")))
+      (button
+        :class {wifi-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
+        :onclick "~/dotfiles/eww/scripts/wifi-toggle.sh"
+        (label :text {wifi-enabled == 1 ? "ON" : "OFF"})))
+    (scroll :class "tab-scroll" :vscroll true :hscroll false :height 320
+      (box :class "list-panel" :orientation "v" :space-evenly false
+        (label :class "empty-list-text"
+               :visible {wifi-enabled != 1}
+               :text "Wi-Fi is off.")
+        (box :orientation "v" :space-evenly false :visible {wifi-enabled == 1}
+          (for net in wifi-list
+            (wifi-item :net net)))))))
+
+;; --- Bluetooth tab content ---
+(defwidget bluetooth-tab []
+  (box :class "tab-pane"
+       :orientation "v"
+       :space-evenly false
+    (box :class "toggle-row"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (box :orientation "h" :space-evenly false :valign "center" :hexpand true
+        (label :class "bt-toggle-icon" :text "󰂯" :halign "center")
+        (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+          (label :class "toggle-label" :text "Bluetooth" :halign "start")
+          (label :class "toggle-sublabel" :text {bt-enabled == 1 ? "On" : "Off"}
+                 :halign "start" :valign "center")))
+      (button :class "list-btn"
+              :visible {bt-enabled == 1}
+              :onclick "bash -c '~/dotfiles/eww/scripts/bt-scan.sh &'"
+        (label :text "SCAN"))
       (button
         :class {bt-enabled == 1 ? "toggle-btn on" : "toggle-btn off"}
         :onclick "bash -c '~/dotfiles/eww/scripts/bt-toggle.sh ${bt-enabled} &'"
         (label :text {bt-enabled == 1 ? "ON" : "OFF"})))
-    (bt-panel)))
+    (scroll :class "tab-scroll" :vscroll true :hscroll false :height 320
+      (box :class "list-panel" :orientation "v" :space-evenly false
+        (label :class "empty-list-text"
+               :visible {bt-enabled != 1}
+               :text "Bluetooth is off.")
+        (label :class "empty-list-text"
+               :visible {bt-enabled == 1 && bt-device-count == 0}
+               :text "No devices found. Tap SCAN.")
+        (box :orientation "v" :space-evenly false :visible {bt-enabled == 1}
+          (for dev in bt-list
+            (bt-item :dev dev)))))))
+
+;; --- Clipboard tab content ---
+(defwidget clipboard-tab []
+  (box :class "tab-pane"
+       :orientation "v"
+       :space-evenly false
+    (box :class "toggle-row"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (box :orientation "h" :space-evenly false :valign "center" :hexpand true
+        (label :class "clip-toggle-icon" :text "󰅌" :halign "center")
+        (box :orientation "v" :space-evenly false :halign "start" :valign "center"
+          (label :class "toggle-label" :text "Clipboard" :halign "start")
+          (label :class "toggle-sublabel" :text clipboard-subtitle
+                 :halign "start" :valign "center")))
+      (button :class "clear-btn"
+              :visible {clipboard-count > 0}
+              :onclick "bash -c '~/dotfiles/eww/scripts/clipboard-clear.sh &'"
+        (label :text "CLEAR")))
+    (scroll :class "tab-scroll" :vscroll true :hscroll false :height 320
+      (box :class "list-panel" :orientation "v" :space-evenly false
+        (label :class "empty-list-text"
+               :visible {clipboard-count == 0}
+               :text "Clipboard empty.")
+        (for item in clipboard-list
+          (clipboard-item :item item))))))
+
+;; --- Quick tab content ---
+(defwidget quick-tab []
+  (box :class "tab-pane quick-tab"
+       :orientation "v"
+       :space-evenly false
+    (box :class "quick-stack"
+         :orientation "v"
+         :space-evenly false
+      (capture-toggles)
+      (caffeine-toggle)
+      (volume-slider)
+      (mic-slider)
+      (brightness-slider))))
+
+;; --- Tab stack ---
+(defwidget cc-tab-content []
+  (box :class "cc-tab-content"
+       :orientation "v"
+       :space-evenly false
+    (box :visible {active-tab == "quick"}
+      (quick-tab))
+    (box :visible {active-tab == "wifi"}
+      (wifi-tab))
+    (box :visible {active-tab == "bluetooth"}
+      (bluetooth-tab))
+    (box :visible {active-tab == "clipboard"}
+      (clipboard-tab))))
+
+;; --- Clipboard history item ---
+(defwidget clipboard-item [item]
+  (button :class "net-item"
+          :onclick "bash -c '~/dotfiles/eww/scripts/clipboard-copy.sh \"${item.id}\" &'"
+    (box :orientation "h" :space-evenly false :valign "center"
+      (label :class "clip-toggle-icon" :text "󰅌")
+      (label :class "clipboard-name" :text {item.text}
+             :hexpand true :halign "start" :truncate true))))
 
 ;; --- Volume Slider ---
 (defwidget volume-slider []
@@ -257,20 +360,9 @@
               :onclick "eww --config $HOME/dotfiles/eww close control_center"
         (label :text "󰅖")))
     (box :class "cc-divider")
-    (box :class "cc-section"
-         :orientation "v"
-         :space-evenly false
-      (wifi-toggle)
-      (bt-toggle))
+    (cc-tabbar)
     (box :class "cc-divider")
-    (capture-toggles)
-    (box :class "cc-divider")
-    (box :class "cc-section"
-         :orientation "v"
-         :space-evenly false
-      (volume-slider)
-      (mic-slider)
-      (brightness-slider))))
+    (cc-tab-content)))
 
 ;; =============================================
 ;; WINDOWS
@@ -298,7 +390,7 @@
   :focusable true
   :geometry (geometry :x "12px"
                       :y "0px"
-                      :width "420px"
+                      :width "460px"
                       :height "0px"
                       :anchor "center left")
   (cc-main))

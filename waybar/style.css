@@ -162,7 +162,6 @@ window#waybar.right {
   color: #ffffff;
   font-size: 20px;
   font-weight: 700;
-  font-family: "SF Compact Rounded";
 }
 
 /* === WORKSPACES === */
@@ -171,7 +170,7 @@ window#waybar.right {
 }
 
 #workspaces button {
-  padding: 8px 0;
+  padding: 2px 0;
   margin: 5px 0;
   color: rgba(255, 255, 255, 0.3);
   border-radius: 0;
